@@ -26,7 +26,7 @@ def patientDashFunc():
             columns = [column[0] for column in cursor.description]
             results = [dict(zip(columns, row)) for row in data]
             #print("RESULTS: ", results)
-            print("JOURNALS SUCCESSFUL")
+            # print("JOURNALS SUCCESSFUL")
             totalResults.append(results)
         else:
             totalResults.append("Nothing")
@@ -42,7 +42,7 @@ def patientDashFunc():
             feedback_columns = [column[0] for column in cursor.description]
             feedback_results = [dict(zip(feedback_columns, row)) for row in feedback_data]
             #print("Feedback RESULTS: ", feedback_results)
-            print("FEEDBACK SUCCESSFUL")
+            # print("FEEDBACK SUCCESSFUL")
             totalResults.append(feedback_results)
         else:
             totalResults.append("Nothing")
@@ -92,10 +92,10 @@ def patientDashFunc():
             daily_survey_columns = [column[0] for column in cursor.description]
             daily_survey_results = [dict(zip(daily_survey_columns, row)) for row in daily_survey_data]
             # print("Daily Survey RESULTS: ", daily_survey_results)
-            print("DAILY SURVEYS SUCCESSFUL")
+            # print("DAILY SURVEYS SUCCESSFUL")
             totalResults.append(daily_survey_results)
         else:
-            print("NO DAILY SURVEYS FOUND")
+            # print("NO DAILY SURVEYS FOUND")
             totalResults.append("Nothing")
         
         #   Extract incomplete therapist survey (if exists)
@@ -117,7 +117,7 @@ def patientDashFunc():
                 incomp_surveys_columns = [column[0] for column in cursor.description]
                 incomp_surveys_results = [dict(zip(incomp_surveys_columns, row)) for row in incomp_surveys_data]
                 #print("Incomplete Survey RESULTS: ", incomp_surveys_results)
-                print("INCOMPLETE THERAPIST SURVEYS SUCCESSFUL")
+                # print("INCOMPLETE THERAPIST SURVEYS SUCCESSFUL")
                 totalResults.append(incomp_surveys_results)
             else:
                 totalResults.append("Nothing")
@@ -140,7 +140,7 @@ def patientDashFunc():
             if comp_surveys_data:
                 comp_surveys_columns = [column[0] for column in cursor.description]
                 comp_surveys_results = [dict(zip(comp_surveys_columns, row)) for row in comp_surveys_data]
-                print("COMPLETE THERAPIST SURVEYS SUCCESSFUL")
+                # print("COMPLETE THERAPIST SURVEYS SUCCESSFUL")
                 totalResults.append(comp_surveys_results)
             else:
                 totalResults.append("Nothing")
@@ -159,7 +159,7 @@ def patientDashFunc():
             invoices_columns = [column[0] for column in cursor.description]
             invoices_results = [dict(zip(invoices_columns, row)) for row in invoices_data]
             #print("Invoices RESULTS: ", invoices_results)
-            print("INVOICES SUCCESSFUL")
+            # print("INVOICES SUCCESSFUL")
             totalResults.append(invoices_results)
         else:
             totalResults.append("Nothing")
@@ -175,11 +175,11 @@ def save():
         journalEntry = request.json.get('journalEntry')
         patientId = request.json.get('patientId')
         journalId = request.json.get('journalId') if request.json.get('journalId') else "null"
-        print("Journal ID: " + journalId + "\n")
+        # print("Journal ID: " + journalId + "\n")
         cursor = mysql.connection.cursor()
         if journalId == "null":
             currentDate = datetime.now()
-            print(currentDate)
+            # print(currentDate)
             cursor.execute('''
                     INSERT INTO journals (patientID, journalEntry, timeDone)
                     VALUES (%s, %s, %s)
@@ -199,13 +199,23 @@ def save():
 @PatientDashboardData.route("/sendFeedback", methods=['POST'])
 def sendFeedbackFunc():
     try:
-        print("GOT HERE")
-        patientID = request.json.get('patientId')
+        # print("GOT HERE")
+        therapistID = request.json.get('therapistID')
+        patientID = request.json.get('patientID')
         feedback = request.json.get('feedback')
+
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT userID FROM patients WHERE patientID = %s", (patientID, ))
+        realUserID = cursor.fetchone()[0]
+
+        cursor.execute("INSERT INTO feedback (therapistID, patientID, feedbackDate, feedback) VALUES (%s, %s, NOW(), %s)", (therapistID, patientID, feedback))
+        mysql.connection.commit()
+
         # Emit the event to the connected socket clients
-        app.socketio.emit('new-feedback', {
-            'feedback': feedback
-        }, room=app.sockets[patientID])
+        if str(realUserID) in app.sockets:
+            app.socketio.emit('new-feedback', {
+                'feedback': feedback
+            }, room=app.sockets[str(realUserID)])
 
         return jsonify({"message": "Success"}), 200
     except Exception as err:
@@ -230,7 +240,7 @@ def sendTherapistSurveyFunc():
         therapistID = cursor.fetchone()
         
         if therapistID is None:
-            print("TherapistID not found for surveyID:", surveyID)
+            # print("TherapistID not found for surveyID:", surveyID)
             return jsonify({"error": "Therapist not found for this survey."}), 404
         
         therapistID = therapistID[0]
@@ -242,7 +252,7 @@ def sendTherapistSurveyFunc():
         mysql.connection.commit()
 
         # Log success after inserting
-        print("Survey inserted successfully.")
+        # print("Survey inserted successfully.")
         
         cursor.execute('''
                 DELETE FROM surveys WHERE surveyID = %s    
@@ -283,18 +293,19 @@ def sendDailySurveyFunc():
         cursor.close()
 
         # Emit the event to the connected socket clients
-        app.socketio.emit('submit-daily-survey', {
-            'patientID': fakeUserID,
-            'dailySurveyID': dailySurveyID,
-            'weight': weight,
-            'height': height,
-            'calories': calories,
-            'water': water,
-            'exercise': exercise,
-            'sleep': sleep,
-            'energy': energy,
-            'stress': stress
-        }, room=app.sockets[realUserID])
+        if str(realUserID) in app.sockets:
+            app.socketio.emit('submit-daily-survey', {
+                'patientID': fakeUserID,
+                'dailySurveyID': dailySurveyID,
+                'weight': weight,
+                'height': height,
+                'calories': calories,
+                'water': water,
+                'exercise': exercise,
+                'sleep': sleep,
+                'energy': energy,
+                'stress': stress
+            }, room=app.sockets[realUserID])
 
         return jsonify({"message": "Survey data submitted successfully!"}), 200
     except Exception as err:
