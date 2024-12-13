@@ -45,6 +45,7 @@ jobs:
           # Replace "http://localhost:5000/" with "https://mentcare-backend.onrender.com/" in all frontend files
           find ./frontend/src -type f -exec sed -i 's/http:\/\/localhost:5000\//https:\/\/mentcare-backend.onrender.com\//g' {} +
           find ./frontend/src -type f -exec sed -i "s#io('http://localhost:5000')#io('https://mentcare-backend.onrender.com')#g" {} +
+          find . -type f -name "*.css" -exec bash -c 'mv "$0" "${0%.css}.scss"' {} \;
       - name: Stage and commit changes to frontend branch
         run: |
           # Stage only the specific frontend files
