@@ -1,0 +1,17 @@
+.pagination-item {
+    background-color: #00C7A6;
+    padding: 10px 16px;
+    border-radius: 25px;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+
+    &:hover {
+        background-color: #00a88c;
+        cursor: pointer;
+    }
+}
+
+.pagination-container {
+    display: flex;
+    list-style-type: none;
+}

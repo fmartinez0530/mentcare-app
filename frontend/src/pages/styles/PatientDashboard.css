@@ -1,0 +1,146 @@
+.patient-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* gap: 50px; */
+}
+
+.patient-card {
+    border: 2px solid rgb(52, 196, 169);
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    position: relative;
+    gap: 50px;
+}
+
+.popUp-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* .popUp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    background-color: #e0e0e0;
+    padding: 40px;
+    border-radius: 25px;
+    z-index: 999;
+} */
+
+.pd-popUp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    background-color: #e0e0e0;
+    padding: 40px;
+    border-radius: 25px;
+    z-index: 999;
+
+    &>h2,
+    h3 {
+        margin: 0;
+    }
+
+    &>h2 {
+        margin-bottom: 10px;
+    }
+
+    &>p {
+        font-size: 14pt;
+    }
+
+    &>textarea {
+        width: 600px;
+        height: 400px;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 25px;
+        background-color: #f8f8f8;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 16px;
+        resize: none;
+        outline: none;
+    }
+}
+
+.questions-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.card-buttons {
+    background-color: #00C7A6;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: medium;
+    color: white;
+    width: 80%;
+
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-size: 12pt;
+
+    &:hover {
+        background-color: #00a88c;
+        cursor: pointer;
+    }
+}
+
+.pd-action-btn {
+    width: 100px;
+    padding: 8px 14px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.pd-questions-container {
+    &>h2 {
+        text-transform: uppercase;
+        font-size: 24pt;
+    }
+}
+
+.pd-question-container {
+    padding: 10px;
+
+    &>label {
+        font-size: 16pt;
+    }
+
+    &>.pd-textarea {
+        resize: none;
+        border-radius: 5px;
+        border: none;
+        font-size: 14pt;
+    }
+}

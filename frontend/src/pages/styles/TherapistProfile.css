@@ -1,0 +1,126 @@
+.therapist-profile {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #d4f5e9;
+    border-radius: 8px;
+}
+
+.h1_class {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* Applies a stylish serif font */
+    font-size: 3rem;
+    /* Sets the font size to 3 rem units */
+    font-weight: bold;
+    /* Makes the text bold */
+    color: rgba(87, 216, 194);
+    /* Sets a dark blue-gray color */
+    text-align: center;
+    /* Centers the text horizontally */
+    margin-top: 20px;
+    /* Adds space above the heading */
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #000;
+}
+
+.login-btn {
+    background: none;
+    border: 2px solid #34c4a9;
+    color: #34c4a9;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #3434c4;
+    color: #000;
+    border: navajowhite;
+    cursor: pointer;
+    border: 5px solid rgb(228, 232, 6);
+    /* Adds a black border */
+    margin-right: 20px;
+}
+
+.login-btn:hover {
+    background-color: #34c4a9;
+    color: #fff;
+}
+
+.profile,
+.availability,
+.pricing,
+.reviews,
+.patient-reviews {
+    padding: 2rem;
+    border-bottom: 1px solid #000;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.reach-out-btn,
+.add-review-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #34c4a9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reach-out-btn:hover,
+.add-review-btn:hover {
+    background-color: #2a9d84;
+}
+
+.rating-bar {
+    background-color: #ddd;
+    height: 1rem;
+    margin-top: 0.5rem;
+    width: 80%;
+    border-radius: 4px;
+}
+
+.review-item {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ther-profile-textarea {
+    width: 350px;
+    height: 125px;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+}
