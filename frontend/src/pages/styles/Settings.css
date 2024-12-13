@@ -1,0 +1,174 @@
+.cards-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    position: relative;
+    gap: 50px;
+}
+
+/* .left-side {
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+} */
+
+.therapist-dashboard-container {
+    justify-content: space-evenly;
+}
+
+.margined {
+    margin: 50px;
+    /* padding: 100px; */
+}
+
+.settings-popUp-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.settings-popUp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    background-color: #e0e0e0;
+    padding: 40px;
+    border-radius: 25px;
+    z-index: 999;
+
+    &>h2 {
+        color: black;
+    }
+}
+
+.right-side {
+    /* margin: 50px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.settings-img-circle-mask {
+    width: 150px;
+    height: 150px;
+    mask-image: url('../assets/images/circle_mask.png');
+    mask-repeat: no-repeat;
+    mask-size: cover;
+    mask-position: center;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.settings-profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.settings-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    gap: 5px;
+
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    width: max-content;
+}
+
+.settings-text-input {
+    height: 30px;
+    padding: 0;
+    flex-grow: 1;
+    font-size: 12pt;
+}
+
+.settings-upd-details-container {
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.settings-undo-btn-container {
+    height: 100%;
+    object-fit: cover;
+}
+
+.settings-btn {
+    background-color: rgba(87, 216, 194);
+    padding: 14px 18px;
+    text-transform: uppercase;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    font-size: 12pt;
+    height: 44px;
+    border-radius: 10px;
+    border: 0px;
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(0.8);
+    }
+}
+
+.settings-acc-action-btn {
+    background-color: #ccc;
+    padding: 14px 18px;
+    text-transform: uppercase;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    font-size: 12pt;
+    height: 44px;
+    border-radius: 10px;
+    border: 0px;
+    margin-top: 30px;
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(0.8);
+    }
+}
+
+.settings-red-btn {
+    background-color: #e74c4c;
+}
+
+.settings-green-btn {
+    background-color: #4ce74c;
+}
+
+.settings-undo-btn-container {
+    height: 100%;
+    background-color: #b8b8b8;
+    padding: 2px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #969696;
+    }
+}

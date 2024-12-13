@@ -1,0 +1,181 @@
+.cards-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    position: relative;
+    gap: 50px;
+}
+
+/* .left-side {
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+} */
+
+.therapist-dashboard-container {
+    justify-content: space-evenly;
+}
+
+.margined {
+    margin: 50px;
+    /* padding: 100px; */
+}
+
+.popUp-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.popUp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    background-color: #e0e0e0;
+    padding: 20px;
+    border-radius: 25px;
+    z-index: 999;
+
+    &>h2 {
+        color: black;
+    }
+}
+
+.right-side {
+    /* margin: 50px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.acceptanceBtn {
+    padding: 20px;
+    font-size: 14pt;
+    border-radius: 10px;
+    border: 0px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    height: 56px;
+    width: 300px;
+    color: black;
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(0.8);
+    }
+}
+
+.td-btn {
+    background-color: rgba(87, 216, 194);
+    padding: 14px 18px;
+    text-transform: uppercase;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    font-size: 12pt;
+    height: 44px;
+    border-radius: 10px;
+    border: 0px;
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(0.8);
+    }
+}
+
+.td-btn-no-hover {
+    background-color: rgba(87, 216, 194);
+    padding: 14px 18px;
+    text-transform: uppercase;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    font-size: 12pt;
+    height: 44px;
+    border-radius: 10px;
+    border: 0px;
+}
+
+.td-question-input {
+    flex-grow: 1;
+    height: 30px;
+    font-size: 12pt;
+}
+
+.td-new-questions-container {
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.td-question-remove-btn {
+    font-size: 12pt;
+    padding: 0 10px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.td-active-patients {
+    gap: 50px;
+}
+
+.td-patient-text {
+    font-size: 16pt;
+    margin-left: 10px;
+}
+
+.td-clickable-active-patient {
+    display: flex;
+    align-items: center;
+    border: 2px solid rgb(52, 196, 169);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    gap: 5px;
+
+    border-radius: 20px;
+    padding: 20px;
+    /* text-align: center; */
+    width: 500px;
+    position: relative;
+
+    text-overflow: ellipsis;
+    transition: background-color 0.5s, transform 0.5s;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #e9e9e9;
+        transform: translateX(50px);
+    }
+}
+
+.td-nowrap-text {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.td-right-wall {
+    padding: 10px;
+    border-right: 2px solid black;
+}

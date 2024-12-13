@@ -1,0 +1,57 @@
+.payment-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.payment-main-container {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    white-space: nowrap;
+    background-color: rgba(87, 216, 194, 0.9);
+    border-radius: 80px;
+    box-shadow: 2px 2px 5px rgb(63, 63, 63);
+    padding: 50px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    white-space: nowrap;
+    align-items: center;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+
+    border-radius: 20px;
+    padding: 50px;
+    /* text-align: center; */
+    /* position: relative; */
+    border: 2px solid rgb(52, 196, 169);
+}
+
+.row-spacing {
+    margin-bottom: -5px;
+    align-items: center;
+    text-align: center;
+    flex: auto;
+}
+
+.row-spacing.title {
+    text-decoration: solid;
+    text-rendering: geometricPrecision;
+    text-orientation: upright;
+}
+
+.row-spacing.one {
+    justify-content: center;
+}
+
+.payment-label {
+    font-size: 12pt;
+}

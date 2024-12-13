@@ -1,0 +1,163 @@
+.reg-input-container {
+    padding: 10px;
+    gap: 5px;
+    position: relative;
+
+    &>label {
+        font-size: 14pt;
+    }
+}
+
+.reg-name-input {
+    width: 130px;
+}
+
+.reg-user-input {
+    height: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12pt;
+    border: none;
+}
+
+.reg-password-toggle-btn {
+    width: 40px;
+    position: absolute;
+    right: -20px;
+    top: 42px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.userIntInput {
+    width: 60px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14pt;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+.subtitle {
+    color: black;
+    font-size: 20pt;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
+}
+
+.register-form {
+    height: 500px;
+    padding: 50px;
+    background-color: rgba(87, 216, 194, 0.9);
+    border-radius: 25px;
+    box-shadow: 2px 2px 5px rgb(63, 63, 63);
+
+    justify-content: space-between;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: max-content;
+    transition: width 5s;
+}
+
+.pt-button {
+    width: 100px;
+    height: 35px;
+    border-radius: 25px;
+
+    border: none;
+    background-color: rgb(173, 173, 173);
+
+    &:hover {
+        cursor: pointer;
+        border: 2px solid black;
+    }
+}
+
+.selected-pt-btn {
+    border: 2px solid black;
+}
+
+.grid-specs-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+}
+
+.grid-spec {
+    width: 120px;
+    height: 50px;
+    background-color: #4B8C8C;
+    border: none;
+    border-radius: 25px;
+    font-size: 12pt;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:active {
+        background-color: #2b8080;
+    }
+}
+
+.selected-spec {
+    background-color: #ff7a00;
+
+    &:active {
+        background-color: #c76000;
+    }
+}
+
+.pageBtn,
+.registerBtn {
+    border-radius: 25px;
+    border: none;
+    padding: 10px;
+    width: 150px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.patient-input-container {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.therapist-input-container {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.register-pic-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.reg-question-container {
+    font-size: 16pt;
+    gap: 20px;
+
+    &>label {
+        max-width: 400px;
+        text-wrap: wrap;
+    }
+}
+
+.reg-questionnaire-container {
+    gap: 20px;
+}

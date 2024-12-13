@@ -1,0 +1,88 @@
+.forgotPassBtn {
+    border: none;
+}
+
+.input-container {
+    width: 300px;
+    padding: 10px;
+    gap: 5px;
+    position: relative;
+
+    &>label {
+        font-size: 14pt;
+    }
+
+    &>a {
+        margin-top: 8px;
+        color: black;
+        width: max-content;
+    }
+
+    &>a:hover {
+        cursor: pointer;
+    }
+}
+
+.email-input {
+    height: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12pt;
+    border: none;
+}
+
+.password-input {
+    height: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12pt;
+    border: none;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:-webkit-autofill {
+        background-color: transparent !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+}
+
+.password-container {
+    width: 100%;
+}
+
+.password-toggle-btn {
+    width: 40px;
+    position: absolute;
+    right: 15px;
+    top: 42px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.loginBtn {
+    width: 200px;
+    border-radius: 25px;
+    border: none;
+    padding: 10px;
+    font-size: 12pt;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.redirect-register {
+    margin-top: 10px;
+
+    &>a {
+        color: black;
+    }
+
+    &>a:hover {
+        cursor: pointer;
+    }
+}
