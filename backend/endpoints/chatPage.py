@@ -127,10 +127,12 @@ def startChatFunc():
         userID = data[0]
 
         print('got in')
+        #fkasndk
         # Emit the event to the connected socket clients
-        app.socketio.emit('start-chat-for-patient', {
-            'therapistID': therapistID
-        }, room=app.sockets[str(userID)])
+        if str(userID) in app.sockets:
+            app.socketio.emit('start-chat-for-patient', {
+                'therapistID': therapistID
+            }, room=app.sockets[str(userID)])
 
         return jsonify({"message": "Chat started successfully!"}), 200
     except Exception as err:
@@ -147,9 +149,10 @@ def endChatFunc():
         userID = data[0]
 
         # Emit the event to the connected socket clients
-        app.socketio.emit('end-chat-for-patient', {
-            'message':'inactive'
-        }, room=app.sockets[str(userID)])
+        if str(userID) in app.sockets:
+            app.socketio.emit('end-chat-for-patient', {
+                'message':'inactive'
+            }, room=app.sockets[str(userID)])
 
         return jsonify({"message": "Chat ended successfully!"}), 200
     except Exception as err:
@@ -167,9 +170,10 @@ def requestChatFunc():
         userID = data[0]
 
         # Emit the event to the connected socket clients
-        app.socketio.emit('request-chat', {
-            'patientID':patientID
-        }, room=app.sockets[str(userID)])
+        if str(userID) in app.sockets:
+            app.socketio.emit('request-chat', {
+                'patientID':patientID
+            }, room=app.sockets[str(userID)])
 
         return jsonify({"message": "Requested"}), 200
     except Exception as err:
@@ -227,10 +231,11 @@ def send_message():
         print(sender)
         print(message)
         print(patient_id)
-        room = app.sockets[str(userID)]
-        print(room)
-        app.socketio.emit('new-message', { 'patientId': patient_id, 'therapistId': therapist_id, 'message': message, 'sender': sender }, room=room)
-        print("New message sent to room " + room + " - " + message)
+        if str(userID) in app.sockets:
+            room = app.sockets[str(userID)]
+            print(room)
+            app.socketio.emit('new-message', { 'patientId': patient_id, 'therapistId': therapist_id, 'message': message, 'sender': sender }, room=room)
+            print("New message sent to room " + room + " - " + message)
 
         return jsonify({"message": "Success"}), 200
 
