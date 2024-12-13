@@ -39,7 +39,7 @@ jobs:
       - name: Checkout specific files from dev branch
         run: |
           # Checkout only the specific frontend files from the dev branch
-          git checkout dev -- frontend/src frontend/package.json frontend/package-lock.json
+          git checkout dev -- frontend/public frontend/src frontend/package.json frontend/package-lock.json
       - name: Replace strings in frontend files
         run: |
           # Replace "http://localhost:5000/" with "https://mentcare-backend.onrender.com/" in all frontend files
@@ -47,7 +47,7 @@ jobs:
       - name: Stage and commit changes to frontend branch
         run: |
           # Stage only the specific frontend files
-          git add frontend/src frontend/package.json frontend/package-lock.json
+          git add frontend/public frontend/src frontend/package.json frontend/package-lock.json
           # Commit changes if there are any
           if git diff --cached --quiet; then
             echo "No changes to commit in frontend branch."
