@@ -4,11 +4,11 @@
     border-radius: 25px;
     border: none;
     font-family: 'Courier New', Courier, monospace;
+}
 
-    &:hover {
-        background-color: #00a88c;
-        cursor: pointer;
-    }
+.pagination-item:hover {
+    background-color: #00a88c;
+    cursor: pointer;
 }
 
 .pagination-container {

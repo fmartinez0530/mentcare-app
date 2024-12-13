@@ -61,34 +61,34 @@
     padding: 40px;
     border-radius: 25px;
     z-index: 999;
+}
 
-    &>h2,
-    h3 {
-        margin: 0;
-    }
+.pd-popUp>h2,
+h3 {
+    margin: 0;
+}
 
-    &>h2 {
-        margin-bottom: 10px;
-    }
+.pd-popUp>h2 {
+    margin-bottom: 10px;
+}
 
-    &>p {
-        font-size: 14pt;
-    }
+.pd-popUp>p {
+    font-size: 14pt;
+}
 
-    &>textarea {
-        width: 600px;
-        height: 400px;
-        padding: 20px;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 25px;
-        background-color: #f8f8f8;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        font-size: 16px;
-        resize: none;
-        outline: none;
-    }
+.pd-popUp>textarea {
+    width: 600px;
+    height: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    background-color: #f8f8f8;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    resize: none;
+    outline: none;
 }
 
 .questions-container {
@@ -107,40 +107,38 @@
 
     font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     font-size: 12pt;
+}
 
-    &:hover {
-        background-color: #00a88c;
-        cursor: pointer;
-    }
+.card-buttons:hover {
+    background-color: #00a88c;
+    cursor: pointer;
 }
 
 .pd-action-btn {
     width: 100px;
     padding: 8px 14px;
-
-    &:hover {
-        cursor: pointer;
-    }
 }
 
-.pd-questions-container {
-    &>h2 {
-        text-transform: uppercase;
-        font-size: 24pt;
-    }
+.pd-action-btn:hover {
+    cursor: pointer;
+}
+
+.pd-questions-container>h2 {
+    text-transform: uppercase;
+    font-size: 24pt;
 }
 
 .pd-question-container {
     padding: 10px;
+}
 
-    &>label {
-        font-size: 16pt;
-    }
+.pd-question-container>label {
+    font-size: 16pt;
+}
 
-    &>.pd-textarea {
-        resize: none;
-        border-radius: 5px;
-        border: none;
-        font-size: 14pt;
-    }
+.pd-question-container>.pd-textarea {
+    resize: none;
+    border-radius: 5px;
+    border: none;
+    font-size: 14pt;
 }
