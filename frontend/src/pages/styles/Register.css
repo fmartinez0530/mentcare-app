@@ -2,10 +2,10 @@
     padding: 10px;
     gap: 5px;
     position: relative;
+}
 
-    &>label {
-        font-size: 14pt;
-    }
+.reg-input-container>label {
+    font-size: 14pt;
 }
 
 .reg-name-input {
@@ -25,10 +25,10 @@
     position: absolute;
     right: -20px;
     top: 42px;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.reg-password-toggle-btn:hover {
+    cursor: pointer;
 }
 
 .userIntInput {
@@ -76,11 +76,11 @@
 
     border: none;
     background-color: rgb(173, 173, 173);
+}
 
-    &:hover {
-        cursor: pointer;
-        border: 2px solid black;
-    }
+.pt-button:hover {
+    cursor: pointer;
+    border: 2px solid black;
 }
 
 .selected-pt-btn {
@@ -100,22 +100,22 @@
     border: none;
     border-radius: 25px;
     font-size: 12pt;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.grid-spec:hover {
+    cursor: pointer;
+}
 
-    &:active {
-        background-color: #2b8080;
-    }
+.grid-spec:active {
+    background-color: #2b8080;
 }
 
 .selected-spec {
     background-color: #ff7a00;
+}
 
-    &:active {
-        background-color: #c76000;
-    }
+.selected-spec:active {
+    background-color: #c76000;
 }
 
 .pageBtn,
@@ -124,10 +124,11 @@
     border: none;
     padding: 10px;
     width: 150px;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.pageBtn,
+.registerBtn:hover {
+    cursor: pointer;
 }
 
 .patient-input-container {
@@ -151,11 +152,11 @@
 .reg-question-container {
     font-size: 16pt;
     gap: 20px;
+}
 
-    &>label {
-        max-width: 400px;
-        text-wrap: wrap;
-    }
+.reg-question-container>label {
+    max-width: 400px;
+    text-wrap: wrap;
 }
 
 .reg-questionnaire-container {

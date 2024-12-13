@@ -48,10 +48,10 @@
     padding: 40px;
     border-radius: 25px;
     z-index: 999;
+}
 
-    &>h2 {
-        color: black;
-    }
+.settings-popUp>h2 {
+    color: black;
 }
 
 .right-side {
@@ -129,11 +129,11 @@
     height: 44px;
     border-radius: 10px;
     border: 0px;
+}
 
-    &:hover {
-        cursor: pointer;
-        filter: brightness(0.8);
-    }
+.settings-btn:hover {
+    cursor: pointer;
+    filter: brightness(0.8);
 }
 
 .settings-acc-action-btn {
@@ -147,11 +147,11 @@
     border-radius: 10px;
     border: 0px;
     margin-top: 30px;
+}
 
-    &:hover {
-        cursor: pointer;
-        filter: brightness(0.8);
-    }
+.settings-acc-action-btn:hover {
+    cursor: pointer;
+    filter: brightness(0.8);
 }
 
 .settings-red-btn {
@@ -166,9 +166,9 @@
     height: 100%;
     background-color: #b8b8b8;
     padding: 2px;
+}
 
-    &:hover {
-        cursor: pointer;
-        background-color: #969696;
-    }
+.settings-undo-btn-container:hover {
+    cursor: pointer;
+    background-color: #969696;
 }

@@ -7,20 +7,20 @@
     padding: 10px;
     gap: 5px;
     position: relative;
+}
 
-    &>label {
-        font-size: 14pt;
-    }
+.input-container>label {
+    font-size: 14pt;
+}
 
-    &>a {
-        margin-top: 8px;
-        color: black;
-        width: max-content;
-    }
+.input-container>a {
+    margin-top: 8px;
+    color: black;
+    width: max-content;
+}
 
-    &>a:hover {
-        cursor: pointer;
-    }
+.input-container>a:hover {
+    cursor: pointer;
 }
 
 .email-input {
@@ -37,15 +37,15 @@
     border-radius: 8px;
     font-size: 12pt;
     border: none;
+}
 
-    &:focus {
-        outline: none;
-    }
+.password-input:focus {
+    outline: none;
+}
 
-    &:-webkit-autofill {
-        background-color: transparent !important;
-        transition: background-color 5000s ease-in-out 0s;
-    }
+.password-container:-webkit-autofill {
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .password-container {
@@ -57,10 +57,10 @@
     position: absolute;
     right: 15px;
     top: 42px;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.password-toggle-btn:hover {
+    cursor: pointer;
 }
 
 .loginBtn {
@@ -69,20 +69,20 @@
     border: none;
     padding: 10px;
     font-size: 12pt;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.loginBtn:hover {
+    cursor: pointer;
 }
 
 .redirect-register {
     margin-top: 10px;
+}
 
-    &>a {
-        color: black;
-    }
+.redirect-register>a {
+    color: black;
+}
 
-    &>a:hover {
-        cursor: pointer;
-    }
+.redirect-register>a:hover {
+    cursor: pointer;
 }

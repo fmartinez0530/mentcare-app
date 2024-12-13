@@ -94,12 +94,13 @@ a h2 {
     padding: 10px;
 }
 
+
 .active-tab {
     padding: 10px;
+}
 
-    &::after {
-        width: 100%;
-    }
+.active-tab::after {
+    width: 100%;
 }
 
 
@@ -110,10 +111,10 @@ a h2 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
 
-    &:hover {
-        cursor: default;
-    }
+.username:hover {
+    cursor: default;
 }
 
 .dropdown {
@@ -125,10 +126,10 @@ a h2 {
     float: right;
     height: 100%;
     position: relative;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.notifs-dropdown:hover {
+    cursor: pointer;
 }
 
 .dropdown-items {
@@ -139,14 +140,14 @@ a h2 {
     width: 100%;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.dropdown-items:hover {
+    cursor: pointer;
+}
 
-    & a {
-        text-decoration: none;
-    }
+.dropdown-items a {
+    text-decoration: none;
 }
 
 .notifs-dropdown-items {
@@ -171,11 +172,11 @@ a h2 {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+}
 
-    &:hover {
-        cursor: pointer;
-        background-color: rgb(219, 219, 219);
-    }
+.hamburger-item:hover {
+    cursor: pointer;
+    background-color: rgb(219, 219, 219);
 }
 
 .hamburger-item-pointer:hover {
@@ -209,11 +210,11 @@ a h2 {
     border-radius: 50%;
     padding: 2px 6px;
     background-color: transparent;
+}
 
-    &:hover {
-        cursor: pointer;
-        background-color: rgb(204, 204, 204);
-    }
+.notif-close-btn:hover {
+    cursor: pointer;
+    background-color: rgb(204, 204, 204);
 }
 
 .user-bell-container {
