@@ -63,7 +63,7 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        const socket = io('http://localhost:5000');
+        const socket = io('https://mentcare-backend.onrender.com');
 
         const fakeUserID = localStorage.getItem("userID");
         const realUserID = localStorage.getItem("realUserID");
