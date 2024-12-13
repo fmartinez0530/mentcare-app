@@ -43,7 +43,7 @@ jobs:
       - name: Replace strings in frontend files
         run: |
           # Replace "http://localhost:5000/" with "https://mentcare-backend.onrender.com/" in all frontend files
-          find ./frontend/src -type f -exec sed -i 's/http:\/\/localhost:5000\//https:\/\/mentcare-backend.onrender.com\//g' {} +
+          find ./frontend/src -type f -exec sed -i 's/http:\/\/localhost:5000/https:\/\/mentcare-backend.onrender.com/g' {} +
       - name: Stage and commit changes to frontend branch
         run: |
           # Stage only the specific frontend files
