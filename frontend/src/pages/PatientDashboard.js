@@ -162,7 +162,7 @@ function PatientDashboard() {
     }, [])
 
     useEffect(() => {
-        const socket = io('https://mentcare-backend.onrender.com');
+        const socket = io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']});
 
         const patientID = localStorage.getItem("userID");
 

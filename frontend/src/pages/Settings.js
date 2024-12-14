@@ -22,7 +22,7 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 
-// const socket = io('https://mentcare-backend.onrender.com');
+// const socket = io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']});
 
 function SettingsPage() {
     const [userName, setUserName] = useState();

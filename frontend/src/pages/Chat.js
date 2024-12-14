@@ -15,7 +15,7 @@ function Chat() {
     const chatBoxRef = useRef(null);
 
     useEffect(() => {
-        const socket = io('https://mentcare-backend.onrender.com')
+        const socket = io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']})
 
         const fetchChats = async () => {
             const response = await fetch("https://mentcare-backend.onrender.com/userChats", {

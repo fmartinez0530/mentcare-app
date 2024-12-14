@@ -70,7 +70,7 @@ const Navbar = () => {
             socketRef.current = null;
         }
 
-        const socket = io('https://mentcare-backend.onrender.com');
+        const socket = io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']});
         socketRef.current = socket;
 
         const fakeUserID = localStorage.getItem("userID");

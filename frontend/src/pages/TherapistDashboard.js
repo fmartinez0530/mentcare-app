@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// const socket = io('https://mentcare-backend.onrender.com');
+// const socket = io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']});
 
 function TherapistDashboard() {
     const [acceptingStatus, setAcceptingStatus] = useState();
