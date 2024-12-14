@@ -41,7 +41,7 @@ function Payment() {
             try {
                 const response = await fetch("https://mentcare-backend.onrender.com/getDetails", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://localhost:5000", },
                     body: JSON.stringify({
                         patientId
                     }),
@@ -118,7 +118,7 @@ function Payment() {
         try {
             const response = await fetch("https://mentcare-backend.onrender.com/submitPayment", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://localhost:5000", },
                 body: JSON.stringify({
                     patientId: patientId,
                     invoiceId: invoiceID,

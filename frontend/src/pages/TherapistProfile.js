@@ -48,6 +48,7 @@ function TherapistProfile() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ urlUserId: userId }),
         })
@@ -85,6 +86,7 @@ function TherapistProfile() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ urlUserId: userId, page: page }),
         })
@@ -102,6 +104,7 @@ function TherapistProfile() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ userId: nonParamUserId, userType: userType, urlUserId: userId }),
         })
@@ -119,6 +122,7 @@ function TherapistProfile() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ urlUserId: userId, page: page }),
         })
@@ -195,6 +199,7 @@ function TherapistProfile() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({
                 urlUserId: userId,
@@ -230,6 +235,7 @@ function TherapistProfile() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ userId: nonParamUserId, urlUserId: userId, currentlyTherapist: currentTherapist }),
         })
@@ -261,6 +267,7 @@ function TherapistProfile() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "http://localhost:5000",
                 },
                 body: JSON.stringify({
                     userId: nonParamUserId,

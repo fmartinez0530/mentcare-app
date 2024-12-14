@@ -123,6 +123,7 @@ const Navbar = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",  // Ensure the request is sent as JSON
+                    "Access-Control-Allow-Origin": "http://localhost:5000",
                 },
                 body: JSON.stringify({ realUserID }),
             })
@@ -164,6 +165,7 @@ const Navbar = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "http://localhost:5000",
                 },
                 body: JSON.stringify({ fakeUserID, userType }),
             })
@@ -191,6 +193,7 @@ const Navbar = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",  // Ensure the request is sent as JSON
+                    "Access-Control-Allow-Origin": "http://localhost:5000",
                 },
                 body: JSON.stringify({ realUserID }),
             })
@@ -264,6 +267,7 @@ const Navbar = () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ notificationID }),
         }).catch((err) => console.error("Error fetching data:", err));
