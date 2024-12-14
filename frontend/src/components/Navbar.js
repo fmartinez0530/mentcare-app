@@ -62,8 +62,16 @@ const Navbar = () => {
         // }
     }
 
+    const socketRef = useRef(null);
+
     useEffect(() => {
+        if (socketRef.current) {
+            socketRef.current.disconnect();
+            socketRef.current = null;
+        }
+
         const socket = io('http://localhost:5000');
+        socketRef.current = socket;
 
         const fakeUserID = localStorage.getItem("userID");
         const realUserID = localStorage.getItem("realUserID");
@@ -72,7 +80,7 @@ const Navbar = () => {
         //  Connection
         socket.on('connect', () => {
             if (realUserID !== null) {
-                console.log('Connected to navbar socket');
+                console.log(`Connected to NAVBAR socket (userID = ${realUserID})`);
                 socket.emit("init-socket-navbar-comm", { "userID": realUserID });
             }
             else {
@@ -81,7 +89,7 @@ const Navbar = () => {
         });
         //  Disconnect
         socket.on('disconnect', () => {
-            console.log('Disconnected from server');
+            console.log(`Disconnected from NAVBAR socket (userID = ${realUserID})`);
         });
 
         socket.on('update-navbar', () => {
@@ -273,7 +281,7 @@ const Navbar = () => {
             </div>
 
             <div className="right-section">
-                {!isLoggedIn ? (
+                {!isLoggedIn || !userData ? (
                     <Link to={`/login`} onClick={() => handleTabClick(`/login`)}>
                         <h2 className={`${selectedTab === "/login" ? "active-tab" : "selectable-tab"}`}>Login</h2>
                     </Link>

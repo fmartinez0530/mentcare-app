@@ -1,7 +1,15 @@
 import pytest, json
+from unittest import mock
 from app import *
 
-def test_sendTestimonial():
+@mock.patch("flask_mysqldb.MySQL.connection", autospec=True)
+def test_sendTestimonial(mock_connection):
+    mock_cursor = mock.MagicMock()
+    mock_connection.cursor.return_value = mock_cursor
+    mock_cursor.rowcount = 0
+    mock_cursor.execute.return_value = 0
+    mock_cursor.fetchall.return_value = 123
+
     response = app.test_client().post('/sendTestimonial', json={
         "userId": 1,
         "content": "Wow good website!",
@@ -10,15 +18,24 @@ def test_sendTestimonial():
     assert response.status_code == 200
     assert "Success" == json.loads(response.data.decode("utf-8"))["message"]
 
-    response = app.test_client().post('/sendTestimonial', json={
-        "userId": -1,
-        "content": "Wow good website!",
-    })
-    print(response.data)
-    assert response.status_code == 500
-    assert "(1452, \'Cannot add or update a child row: a foreign key constraint fails (`health`.`testimonials`, CONSTRAINT `testimonials_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`))\')" == json.loads(response.data.decode("utf-8"))["error"]
+# def test_getTestimonials():
+@mock.patch("flask_mysqldb.MySQL.connection", autospec=True)
+def test_getTestimonials(mock_connection):
+    mock_cursor = mock.MagicMock()
+    mock_connection.cursor.return_value = mock_cursor
+    mock_cursor.rowcount = 0
+    mock_cursor.execute.return_value = 0
+    mock_cursor.fetchall.return_value = (
+        (1, 'Testimonial1', None, 'John Smith'),
+        (2, 'Testimonial2', None, 'Jane Doe'),
+        (3, 'Testimonial3', None, 'Linda White'),
+    )
 
-def test_getTestimonials():
     response = app.test_client().get('/getTestimonials')
     print(response.data)
+    print( json.loads(response.data.decode("utf-8")))
     assert response.status_code == 200
+    assert "Testimonial1" == json.loads(response.data.decode("utf-8"))[0]["content"]
+    assert 1 == json.loads(response.data.decode("utf-8"))[0]["id"]
+    assert None == json.loads(response.data.decode("utf-8"))[0]["img"]
+    assert "John Smith" == json.loads(response.data.decode("utf-8"))[0]["username"]

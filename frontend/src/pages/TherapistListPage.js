@@ -240,7 +240,7 @@ const TherapistListPage = () => {
             <div>
               <input style={{ display: 'none' }} type="checkbox" id="gender1" name="gender1" value="Female" ref={el => (genderBtns.current.femaleBtn = el)} onChange={() => setSearchQueryGender2(1)} defaultChecked="true" />
               <label
-                for="gender1"
+                htmlFor="gender1"
                 style={{
                   padding: '10px',
                   backgroundColor: 'rgb(52, 196, 169)',
@@ -260,7 +260,7 @@ const TherapistListPage = () => {
             <div>
               <input style={{ display: 'none' }} type="checkbox" id="gender2" name="gender2" value="Male" ref={el => (genderBtns.current.maleBtn = el)} onChange={() => setSearchQueryGender2(2)} defaultChecked="true" />
               <label
-                for="gender2"
+                htmlFor="gender2"
                 style={{
                   padding: '10px',
                   backgroundColor: 'rgb(52, 196, 169)',
@@ -280,7 +280,7 @@ const TherapistListPage = () => {
             <div>
               <input style={{ display: 'none' }} type="checkbox" id="gender3" name="gender3" value="Other" ref={el => (genderBtns.current.otherBtn = el)} onChange={() => setSearchQueryGender2(3)} defaultChecked="true" />
               <label
-                for="gender3"
+                htmlFor="gender3"
                 style={{
                   padding: '10px',
                   backgroundColor: 'rgb(52, 196, 169)',

@@ -4,6 +4,7 @@ from flask_cors import CORS, cross_origin
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from datetime import datetime
 from io import BytesIO
+from flasgger import Swagger #added for API documentation
 app = Flask(__name__)
 CORS(app, origins="http://localhost:3000")
 socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000", methods=["GET", "POST", "OPTIONS"])
@@ -17,6 +18,9 @@ app.config["MYSQL_PASSWORD"] = "@ElPolloMan03"
 app.config["MYSQL_DB"] = "cs490_GP"
 
 mysql = MySQL(app)
+
+# Initialize Swagger
+swagger = Swagger(app)
 
 from endpoints.example import examplePageStuff
 app.register_blueprint(examplePageStuff)
@@ -66,10 +70,58 @@ app.register_blueprint(settingsPageData)
 
 @app.route("/")
 def defaultFunc():
+    """
+    Check Backend Status
+    ---
+    tags:
+      - General
+    responses:
+      200:
+        description: Backend status
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: "Backend is alive"
+    """
     return {"status": "Backend is alive"}
 
 @app.route("/navbarData", methods=['POST'])
 def navbarDataFunc():
+    """
+    Fetch Navbar Data
+    ---
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          properties:
+            fakeUserID:
+              type: integer
+              description: Fake user ID
+            userType:
+              type: string
+              description: User type (e.g., Patient or Therapist)
+    responses:
+      200:
+        description: Navbar data fetched successfully
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              userID:
+                type: integer
+              userName:
+                type: string
+              userType:
+                type: string
+      404:
+        description: User not found
+    """
     try:
         fakeUserId = request.json.get('fakeUserID')
         userType = request.json.get('userType')
@@ -140,6 +192,27 @@ def retriveProfilePicFunc():
     
 @app.route('/deleteNotification', methods=['POST'])
 def delNotifFunc():
+    """
+    Delete a Notification
+    ---
+    tags:
+      - Notifications
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          properties:
+            notificationID:
+              type: integer
+              example: 1
+    responses:
+      200:
+        description: Notification deleted successfully
+      500:
+        description: Internal Server Error
+    """
     try:
         notificationID = request.json.get('notificationID')
 
@@ -156,6 +229,27 @@ def delNotifFunc():
     
 @app.route('/updateSocketsNavbar', methods=['POST'])
 def updateSocketsNavFunc():
+    """
+    Update Navbar Sockets
+    ---
+    tags:
+      - Sockets
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          properties:
+            realUserID:
+              type: integer
+              example: 101
+    responses:
+      200:
+        description: Navbar sockets updated successfully
+      500:
+        description: Internal Server Error
+    """
     try:
         print("GOT HERE")
         realUserID = request.json.get('realUserID')

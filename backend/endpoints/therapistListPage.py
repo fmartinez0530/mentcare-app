@@ -10,6 +10,54 @@ therapistListData = Blueprint('therapistListData', __name__)
 
 @therapistListData.route('/getTherapists', methods=['GET'])
 def get_therapists():
+    """
+    Fetch All Therapists
+    ---
+    tags:
+      - Therapists
+    responses:
+      200:
+        description: List of therapists retrieved successfully
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              userID:
+                type: integer
+                description: Therapist's user ID
+              name:
+                type: string
+                description: Therapist's name
+              gender:
+                type: string
+                description: Therapist's gender
+              profileImg:
+                type: string
+                description: URL of the therapist's profile image
+              specializations:
+                type: array
+                items:
+                  type: string
+                description: List of specializations
+              intro:
+                type: string
+                description: Therapist's introduction
+              education:
+                type: string
+                description: Therapist's education details
+              availability:
+                type: string
+                description: Therapist's availability
+              price:
+                type: string
+                description: Charging price of the therapist
+              isActive:
+                type: boolean
+                description: Whether the therapist is currently active
+      500:
+        description: Internal server error
+    """
     try:
         from app import mysql
         cursor = mysql.connection.cursor()
@@ -31,7 +79,7 @@ def get_therapists():
             JOIN 
                 users u ON t.userID = u.userID
             WHERE 
-                u.userType = 'Therapist' AND t.acceptingPatients = 1
+                u.userType = 'Therapist' AND t.acceptingPatients = 1 AND t.isActive = 1
         ''')
         data = cursor.fetchall()
         cursor.close()
@@ -74,6 +122,30 @@ def get_therapists():
 
 @therapistListData.route('/getProfileImage/<int:therapist_id>', methods=['GET'])
 def get_profile_image(therapist_id):
+    """
+    Fetch Therapist Profile Image
+    ---
+    tags:
+      - Therapists
+    parameters:
+      - name: therapist_id
+        in: path
+        type: integer
+        required: true
+        description: ID of the therapist
+    responses:
+      200:
+        description: Profile image retrieved successfully
+        content:
+          image/jpeg:
+            schema:
+              type: string
+              format: binary
+      404:
+        description: Profile image not found
+      500:
+        description: Internal server error
+    """
     try:
         from app import mysql
         cursor = mysql.connection.cursor()
