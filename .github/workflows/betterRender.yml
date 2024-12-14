@@ -101,6 +101,12 @@ jobs:
           
           # Move the new content into the original file
           mv temp_lines.txt backend/app.py
+          
+      - name: Replace strings in backend files
+        run: |
+          # Replace "http://localhost:3000/" with "https://mentcare-frontend.onrender.com/" in all backend files
+          find ./backend -type f -exec sed -i 's/http:\/\/localhost:3000/https:\/\/mentcare-frontend.onrender.com/g' {} +
+          
       - name: Stage and commit changes to backend branch
         run: |
           # Stage the changes
