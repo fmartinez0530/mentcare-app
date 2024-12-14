@@ -8,7 +8,7 @@ from flasgger import Swagger
 import os
 app = Flask(__name__)
 frontend_url = os.getenv('FRONTEND_URL', 'https://mentcare-frontend.onrender.com')
-CORS(app, origins=frontend_url)
+CORS(app, origins=frontend_url, methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
 socketio = SocketIO(app, cors_allowed_origins=frontend_url, methods=['GET', 'POST', 'OPTIONS'])
 sockets = {}
 socketsNavbar = {}
