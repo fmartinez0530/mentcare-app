@@ -8,8 +8,8 @@ from flasgger import Swagger
 import os
 app = Flask(__name__)
 frontend_url = os.getenv('FRONTEND_URL', 'https://mentcare-frontend.onrender.com')
-CORS(app, origins=*, methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
-socketio = SocketIO(app, cors_allowed_origins=*, methods=['GET', 'POST', 'OPTIONS'])
+CORS(app, origins='*', methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
+socketio = SocketIO(app, cors_allowed_origins='*', methods=['GET', 'POST', 'OPTIONS'])
 sockets = {}
 socketsNavbar = {}
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'localhost')  # Default to localhost if not set
