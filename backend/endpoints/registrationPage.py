@@ -12,6 +12,32 @@ registrationPageData = Blueprint('registrationPageData', __name__)
 
 @registrationPageData.route("/validateUserEmail", methods=['POST'])
 def validateEmailFunc():
+    """
+    Validate User Email
+    ---
+    tags:
+      - Registration
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: "test@example.com"
+            required:
+              - email
+    responses:
+      200:
+        description: Email is valid for registration
+      409:
+        description: Email is already registered
+      500:
+        description: Internal server error
+    """
+
     email = request.json.get('email')
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT email FROM users WHERE email LIKE %s", (email, ))
@@ -22,6 +48,58 @@ def validateEmailFunc():
     
 @registrationPageData.route("/registerPatient", methods=['POST'])
 def registerPatientFunc():
+    """
+    Register Patient
+    ---
+    tags:
+      - Registration
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+                example: "John"
+              lname:
+                type: string
+                example: "Doe"
+              email:
+                type: string
+                example: "john.doe@example.com"
+              password:
+                type: string
+                example: "password123"
+              gender:
+                type: string
+                example: "Male"
+              profileImg:
+                type: string
+                format: binary
+              company:
+                type: string
+                example: "InsuranceCo"
+              insuranceId:
+                type: string
+                example: "INS123456"
+              tier:
+                type: string
+                example: "Gold"
+            required:
+              - fname
+              - lname
+              - email
+              - password
+    responses:
+      200:
+        description: Patient successfully registered
+      400:
+        description: Invalid data or missing fields
+      500:
+        description: Internal server error
+    """
     try:
         fname = request.form.get('fname')
         lname = request.form.get('lname')
@@ -122,6 +200,57 @@ def registerPatientFunc():
     
 @registrationPageData.route("/registerTherapist", methods=['POST'])
 def registerTherapistFunc():
+    """
+    Register Therapist
+    ---
+    tags:
+      - Registration
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+                example: "Alice"
+              lname:
+                type: string
+                example: "Smith"
+              email:
+                type: string
+                example: "alice.smith@example.com"
+              password:
+                type: string
+                example: "securepassword"
+              gender:
+                type: string
+                example: "Female"
+              license:
+                type: string
+                example: "LIC-123456"
+              specializations:
+                type: string
+                example: "Anxiety, Depression"
+              profileImg:
+                type: string
+                format: binary
+            required:
+              - fname
+              - lname
+              - email
+              - password
+              - license
+              - specializations
+    responses:
+      200:
+        description: Therapist successfully registered
+      400:
+        description: Invalid data or missing fields
+      500:
+        description: Internal server error
+    """
     try:
         fname = request.form.get('fname')
         lname = request.form.get('lname')

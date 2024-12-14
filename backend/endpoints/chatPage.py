@@ -15,6 +15,33 @@ chatPageData = Blueprint('chatPageData', __name__)
 
 @chatPageData.route("/getCharging", methods=['POST'])
 def get_charging():
+    """
+    Get Therapist Charging Price
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              therapistId:
+                type: integer
+                example: 1
+    responses:
+      200:
+        description: Charging price fetched successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: number
+      500:
+        description: Internal server error
+    """
     try:
         therapist_id = request.json.get('therapistId')
         cursor = mysql.connection.cursor()
@@ -24,7 +51,7 @@ def get_charging():
 
         mysql.connection.commit()
         cursor.close()
-        print(charging[0][0])
+        # print(charging)
 
         return jsonify(charging)
     
@@ -34,6 +61,36 @@ def get_charging():
 
 @chatPageData.route("/updateStatus", methods=['POST'])
 def set_chat_status():
+    """
+    Update Chat or Request Status
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              patientId:
+                type: integer
+                example: 1
+              therapistId:
+                type: integer
+                example: 2
+              status:
+                type: string
+                example: "Active"
+              type:
+                type: string
+                example: "chat"
+    responses:
+      200:
+        description: Status updated successfully
+      500:
+        description: Internal server error
+    """
     try:
         patient_id = request.json.get('patientId')
         therapist_id = request.json.get('therapistId')
@@ -57,6 +114,33 @@ def set_chat_status():
 
 @chatPageData.route('/sendInvoice', methods=['POST'])
 def send_invoice():
+    """
+    Send Invoice
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              patientId:
+                type: integer
+                example: 1
+              therapistId:
+                type: integer
+                example: 2
+              amountDue:
+                type: number
+                example: 150.00
+    responses:
+      200:
+        description: Invoice sent successfully
+      500:
+        description: Internal server error
+    """
     try: 
         patient_id = request.json.get('patientId')
         therapist_id = request.json.get('therapistId')
@@ -81,6 +165,47 @@ def send_invoice():
 
 @chatPageData.route("/userChats", methods=['POST'])
 def get_user_chats():
+    """
+    Get User Chats
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              chooseId:
+                type: integer
+                example: 1
+              userType:
+                type: string
+                example: "Therapist"
+    responses:
+      200:
+        description: Chats fetched successfully
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  userID:
+                    type: integer
+                  userName:
+                    type: string
+                  content:
+                    type: string
+                  chatStatus:
+                    type: string
+                  requestStatus:
+                    type: string
+      500:
+        description: Internal server error
+    """
     try:
         choose_id = request.json.get('chooseId')
         user_type = request.json.get('userType')
@@ -96,7 +221,7 @@ def get_user_chats():
                 INNER JOIN chats c ON tpl.patientID = c.patientID AND tpl.therapistID = c.therapistID
                 WHERE tpl.therapistID = %s
             ''', (choose_id,))
-        else:
+        elif user_type == "Patient":
             cursor.execute('''
                 SELECT t.therapistID, u.userName AS therapistName, c.content, status, chatStatus, requestStatus
                 FROM therapists t
@@ -105,6 +230,8 @@ def get_user_chats():
                 INNER JOIN chats c ON tpl.patientID = c.patientID AND tpl.therapistID = c.therapistID
                 WHERE tpl.patientID = %s
             ''', (choose_id,))
+        else:
+            return jsonify({"error": "Invalid user type"}), 500
 
         data = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
@@ -117,6 +244,30 @@ def get_user_chats():
     
 @chatPageData.route('/startChat', methods=['POST'])
 def startChatFunc():
+    """
+    Start Chat for a Patient
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              patientId:
+                type: integer
+                example: 1
+              therapistId:
+                type: integer
+                example: 2
+    responses:
+      200:
+        description: Chat started successfully
+      500:
+        description: Internal server error
+    """
     try:
         patientID = request.json.get('patientId')
         therapistID = request.json.get('therapistId')
@@ -125,9 +276,6 @@ def startChatFunc():
         cursor.execute('SELECT userID FROM patients WHERE patientID = %s', (patientID, ))
         data = cursor.fetchone()
         userID = data[0]
-
-        print('got in')
-        #fkasndk
         # Emit the event to the connected socket clients
         if str(userID) in app.sockets:
             app.socketio.emit('start-chat-for-patient', {
@@ -140,6 +288,27 @@ def startChatFunc():
 
 @chatPageData.route('/endChat', methods=['POST'])
 def endChatFunc():
+    """
+    End Chat for a Patient
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              patientId:
+                type: integer
+                example: 1
+    responses:
+      200:
+        description: Chat ended successfully
+      500:
+        description: Internal server error
+    """
     try:
         patientID = request.json.get('patientId')
 
@@ -160,6 +329,30 @@ def endChatFunc():
     
 @chatPageData.route('/requestChat', methods=['POST'])
 def requestChatFunc():
+    """
+    Request Chat from a Therapist
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              therapistId:
+                type: integer
+                example: 2
+              patientId:
+                type: integer
+                example: 1
+    responses:
+      200:
+        description: Chat requested successfully
+      500:
+        description: Internal server error
+    """
     try:
         therapistID = request.json.get('therapistId')
         patientID = request.json.get('patientId')
@@ -181,6 +374,36 @@ def requestChatFunc():
     
 @chatPageData.route("/sendMessage", methods=['POST'])
 def send_message():
+    """
+    Send a Chat Message
+    ---
+    tags:
+      - Chat
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              patientId:
+                type: integer
+                example: 1
+              therapistId:
+                type: integer
+                example: 2
+              message:
+                type: string
+                example: "Hello, how are you?"
+              sender:
+                type: string
+                example: "P"
+    responses:
+      200:
+        description: Message sent successfully
+      500:
+        description: Internal server error
+    """
     try:
 
         patient_id = request.json.get('patientId')
@@ -221,7 +444,7 @@ def send_message():
             cursor.execute('SELECT userID FROM therapists WHERE therapistID = %s', (therapist_id, ))
             data = cursor.fetchone()
             userID = data[0]
-        else:
+        elif sender == 'T':
             cursor = mysql.connection.cursor()
             cursor.execute('SELECT userID FROM patients WHERE patientID = %s', (patient_id, ))
             data = cursor.fetchone()

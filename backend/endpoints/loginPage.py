@@ -1,15 +1,55 @@
-from flask import request, jsonify, json, Blueprint #,render_template, request
-from app import mysql # , socketio, sockets
-# If you need socketio stuff maybe uncomment the below line. 100% uncomment the stuff directly above
-# from flask_socketio import SocketIO, join_room, leave_room, send, emit
+from flask import request, jsonify, Blueprint
+from app import mysql
 
-# Feel free to add more imports
-
-
+# Define Blueprint
 loginPageData = Blueprint('loginPageData', __name__)
 
 @loginPageData.route('/patientOrTherapist', methods=['POST'])
 def patientOrTherapistFunc():
+    """
+    Authenticate user and determine their role (Patient or Therapist)
+    ---
+    tags:
+      - Login
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+              description: User's email address.
+            password:
+              type: string
+              description: User's password.
+    responses:
+      200:
+        description: User successfully authenticated.
+        schema:
+          type: object
+          properties:
+            userType:
+              type: string
+              description: Role of the user (Patient or Therapist).
+            userID:
+              type: integer
+              description: Patient ID or Therapist ID.
+            realUserID:
+              type: integer
+              description: User's unique ID in the system.
+            isActive:
+              type: integer
+              description: Active status for therapists (1 for active, 0 for inactive).
+      404:
+        description: No user found with the provided email and password.
+      500:
+        description: Server error.
+    """
     try:
         email = request.json.get('email')
         password = request.json.get('password')
@@ -19,7 +59,6 @@ def patientOrTherapistFunc():
                 ''', (email, password))
         data = cursor.fetchone()
         if data:
-            #   user_id is used to get the respect patient/therapist ids
             userID = data[0]
             fakeUserID = 0
             user_type = data[1]  # Access the first (and only) column in the row
@@ -37,13 +76,10 @@ def patientOrTherapistFunc():
                 data = cursor.fetchone()
                 fakeUserID = data[0]
                 isActive = data[1]
-                print(fakeUserID)
             
-            #   userID ( NOT THE SAME AS user_id, im just bad at naming), is used to send the patient/therapist id
-            #   back to client, no matter if patient or therapist
             cursor.close()
             return jsonify({"userType": user_type, "userID": fakeUserID, "realUserID": userID, "isActive" : isActive})
         else:
             return jsonify({"error": "No user found with the given email and password"}), 404
     except Exception as err:
-        return {"error":  f"{err}"}
+        return {"error": f"{err}"}, 500

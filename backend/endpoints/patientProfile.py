@@ -7,6 +7,48 @@ PatientProfileData = Blueprint('PatientProfileData', __name__)
 # Fetch patient overview details
 @PatientProfileData.route('/patient-overview/<int:userID>', methods=['GET'])
 def get_patient_overview(userID):
+    """
+    Fetch patient overview details
+    ---
+    tags:
+      - Patient Profile
+    parameters:
+      - name: userID
+        in: path
+        required: true
+        type: integer
+        description: User ID of the patient
+    responses:
+      200:
+        description: Patient overview fetched successfully
+        schema:
+          type: object
+          properties:
+            userName:
+              type: string
+            profileImg:
+              type: string
+            allRecordsViewable:
+              type: boolean
+            mainTherapistID:
+              type: integer
+            dailySurveys:
+              type: array
+              items:
+                type: object
+            feedback:
+              type: array
+              items:
+                type: object
+            journals:
+              type: array
+              items:
+                type: object
+      404:
+        description: Patient not found
+      500:
+        description: Server error
+    """
     try:
         cursor = mysql.connection.cursor()
 
@@ -114,6 +156,48 @@ def get_patient_overview(userID):
 # Fetch detailed daily survey responses
 @PatientProfileData.route('/daily-survey-details/<int:completionID>', methods=['GET'])
 def get_daily_survey_details(completionID):
+    """
+        Fetch detailed daily survey responses
+    ---
+    tags:
+      - Patient Profile
+    parameters:
+      - name: completionID
+        in: path
+        required: true
+        type: integer
+        description: Completion ID of the daily survey
+    responses:
+      200:
+        description: Survey details fetched successfully
+        schema:
+          type: object
+          properties:
+            completionID:
+              type: integer
+            weight:
+              type: number
+            height:
+              type: number
+            calories:
+              type: number
+            water:
+              type: number
+            exercise:
+              type: number
+            sleep:
+              type: number
+            energy:
+              type: number
+            stress:
+              type: number
+            surveyDate:
+              type: string
+      404:
+        description: Survey not found
+      500:
+        description: Server error
+    """
     try:
         cursor = mysql.connection.cursor()
         cursor.execute('''
@@ -150,6 +234,33 @@ def get_daily_survey_details(completionID):
 # Add new feedback
 @PatientProfileData.route('/add-feedback', methods=['POST'])
 def add_feedback():
+    """
+    Add new feedback
+    ---
+    tags:
+      - Patient Profile
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          required:
+            - userID
+            - feedback
+          properties:
+            userID:
+              type: integer
+              description: Therapist's user ID
+            feedback:
+              type: string
+              description: Feedback text
+    responses:
+      200:
+        description: Feedback added successfully
+      500:
+        description: Server error
+    """
     try:
         data = request.json
         userID = data.get('userID')
@@ -170,6 +281,33 @@ def add_feedback():
 # Add a new journal entry
 @PatientProfileData.route('/add-journal', methods=['POST'])
 def add_journal():
+    """
+    Add a new journal entry
+    ---
+    tags:
+      - Patient Profile
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          required:
+            - userID
+            - journalEntry
+          properties:
+            userID:
+              type: integer
+              description: Patient's user ID
+            journalEntry:
+              type: string
+              description: Journal entry content
+    responses:
+      200:
+        description: Journal added successfully
+      500:
+        description: Server error
+    """
     try:
         data = request.json
         userID = data.get('userID')
