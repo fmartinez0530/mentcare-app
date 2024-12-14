@@ -26,7 +26,6 @@ function Login() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ email, password }),
         })

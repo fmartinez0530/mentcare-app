@@ -117,7 +117,6 @@ function Register() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "http://localhost:5000",
                 },
                 body: JSON.stringify({ email }),
             });
@@ -142,7 +141,6 @@ function Register() {
             console.log(formData);
             const response = await fetch(`https://q0vvl.wiremockapi.cloud/verifyTherapistLicense?licenseNum=${licenseValue}`, {
                 method: 'GET',
-                headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
             });
             if (response.ok) {
                 // alert("LICENSE NUMBER IS VALID!")
@@ -204,7 +202,6 @@ function Register() {
             try {
                 const response = await fetch('http://localhost:5000/registerPatient', {
                     method: 'POST',
-                    headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
                     body: formData,
                 });
                 if (response.ok) {
@@ -264,7 +261,6 @@ function Register() {
                 try {
                     const response = await fetch('http://localhost:5000/registerTherapist', {
                         method: 'POST',
-                        headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
                         body: formData,
                     });
                     if (response.ok) {

@@ -47,7 +47,13 @@ def send_testimonials():
         mysql.connection.commit()
         cursor.close()
 
-        return jsonify({"message": "Success"}), 200
+        response = jsonify({"message": "Success"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
@@ -102,7 +108,13 @@ def get_testimonials():
             } for row in testimonials
         ]
 
-        return jsonify(formatted_testimonials)
+        response = jsonify(formatted_testimonials)
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
@@ -159,7 +171,7 @@ def get_data():
         cursor.close()
 
         # Format data
-        response = {
+        responseData = {
             "Mission": mission_data[0] if mission_data else "No mission statement available.",
             "Contact": {
                 "Phone": mission_data[1] if mission_data else "No phone available.",
@@ -167,6 +179,13 @@ def get_data():
             },
             "FAQs": [{"Question": row[0], "Answer": row[1]} for row in faqs]
         }
-        return jsonify(response)
+
+        response = jsonify(responseData)
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error": f"{err}"}
