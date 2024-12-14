@@ -95,7 +95,7 @@ function SettingsPage() {
                 setEmail(data.email);
                 setEmailUpd(data.email);
 
-                setPatientPrivacy(data.patientPrivacy);
+                setPatientPrivacy(data.patientPrivacy ? "True" : "False");
 
                 setInsComp(data.insComp);
                 setInsCompUpd(data.insComp);
@@ -419,7 +419,7 @@ function SettingsPage() {
                     <div className={localStorage.getItem('userType') === 'Patient' ? '' : 'hidden'} style={{ width: '100%' }}>
                         <h1>Privacy Details</h1>
                         <label htmlFor="theme">Allow therapists to see old records?</label><br />
-                        <select name="theme" id="theme" defaultValue={patientPrivacy} onChange={(event) => privacyHandler(event)}>
+                        <select name="theme" id="theme" value={patientPrivacy == "True" ? "True" : "False"} onChange={(event) => privacyHandler(event)}>
                             <option value="False">No</option>
                             <option value="True">Yes</option>
                         </select>

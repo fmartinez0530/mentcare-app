@@ -164,76 +164,167 @@ function PatientDashboard() {
     useEffect(() => {
         const socket = io('https://mentcare-backend.onrender.com');
 
-        const patientId = localStorage.getItem("userID");
+        const patientID = localStorage.getItem("userID");
 
-        fetch('https://mentcare-backend.onrender.com/patientDashboardData', {
+        // fetch('https://mentcare-backend.onrender.com/patientDashboardData', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ patientId }), // Send patientId in the body
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         //console.log(data[0]);
+        //         //console.log(data[1]);
+        //         //console.log(data[2]);
+        //         //console.log(data[3]);
+        //         //console.log(data[4]);
+        //         //console.log(data[5]);
+        //         if (data[0] !== "Nothing") {
+        //             setJournals(data[0]);
+        //         }
+        //         else {
+        //             setJournals([]);
+        //         }
+        //         if (data[1] !== "Nothing") {
+        //             setFeedback(data[1]);
+        //         }
+        //         else {
+        //             setFeedback([]);
+        //         }
+        //         if (data[2] !== "Nothing") {
+        //             setDailySurveys(data[2]);
+        //         }
+        //         else {
+        //             setDailySurveys([]);
+        //         }
+        //         if (data[3] !== "Nothing") {
+        //             //console.log("IM HERE")
+        //             setIncompleteTherapistSurveys(data[3]);
+        //             setTherapistSurveyQuestions(JSON.parse(data[3][0].survey));
+        //             //console.log(JSON.parse(data[3][0].survey));
+        //         }
+        //         else {
+        //             setIncompleteTherapistSurveys([]);
+        //             setTherapistSurveyQuestions([]);
+        //         }
+        //         if (data[4] !== "Nothing") {
+        //             setCompleteTherapistSurveys(data[4]);
+        //             // console.log(data[4]);
+        //         }
+        //         else {
+        //             setCompleteTherapistSurveys([]);
+        //         }
+        //         if (data[5] !== "Nothing") {
+        //             setInvoices(data[5]);
+        //         }
+        //         else {
+        //             setInvoices([]);
+        //         }
+        //     })
+        //     .catch(err => console.error('Error fetching data:', err));
+
+        fetch('https://mentcare-backend.onrender.com/getJournals', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ patientId }), // Send patientId in the body
+            body: JSON.stringify({ patientID }), // Send patientId in the body
         })
             .then(res => res.json())
             .then(data => {
-                //console.log(data[0]);
-                //console.log(data[1]);
-                //console.log(data[2]);
-                //console.log(data[3]);
-                //console.log(data[4]);
-                //console.log(data[5]);
-                if (data[0] !== "Nothing") {
-                    setJournals(data[0]);
+                if (data) {
+                    setJournals(data);
                 }
-                else {
-                    setJournals([]);
+            })
+            .catch(err => console.error('Error fetching data:', err));
+
+        fetch('https://mentcare-backend.onrender.com/getFeedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ patientID }), // Send patientId in the body
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setFeedback(data);
                 }
-                if (data[1] !== "Nothing") {
-                    setFeedback(data[1]);
+            })
+            .catch(err => console.error('Error fetching data:', err));
+
+        fetch('https://mentcare-backend.onrender.com/getDailySurveys', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ patientID }), // Send patientId in the body
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setDailySurveys(data);
                 }
-                else {
-                    setFeedback([]);
+            })
+            .catch(err => console.error('Error fetching data:', err));
+
+        fetch('https://mentcare-backend.onrender.com/getIncompleteTherapistSurveys', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ patientID }), // Send patientId in the body
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setIncompleteTherapistSurveys(data);
+                    setTherapistSurveyQuestions(data.survey);
                 }
-                if (data[2] !== "Nothing") {
-                    setDailySurveys(data[2]);
+            })
+            .catch(err => console.error('Error fetching data:', err));
+
+        fetch('https://mentcare-backend.onrender.com/getCompleteTherapistSurveys', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ patientID }), // Send patientId in the body
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setCompleteTherapistSurveys(data);
                 }
-                else {
-                    setDailySurveys([]);
-                }
-                if (data[3] !== "Nothing") {
-                    //console.log("IM HERE")
-                    setIncompleteTherapistSurveys(data[3]);
-                    setTherapistSurveyQuestions(JSON.parse(data[3][0].survey));
-                    //console.log(JSON.parse(data[3][0].survey));
-                }
-                else {
-                    setIncompleteTherapistSurveys([]);
-                    setTherapistSurveyQuestions([]);
-                }
-                if (data[4] !== "Nothing") {
-                    setCompleteTherapistSurveys(data[4]);
-                    // console.log(data[4]);
-                }
-                else {
-                    setCompleteTherapistSurveys([]);
-                }
-                if (data[5] !== "Nothing") {
-                    setInvoices(data[5]);
-                }
-                else {
-                    setInvoices([]);
+            })
+            .catch(err => console.error('Error fetching data:', err));
+
+        fetch('https://mentcare-backend.onrender.com/getInvoices', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ patientID }), // Send patientId in the body
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setInvoices(data);
                 }
             })
             .catch(err => console.error('Error fetching data:', err));
 
         //  Connection
         socket.on('connect', () => {
-            console.log('Connected to server');
+            console.log(`Connected to Patient Dashboard server (userID = ${patientID}`);
             // console.log(patientId)
-            socket.emit("init-socket-comm", { "userID": patientId });
+            socket.emit("init-socket-comm", { "userID": patientID });
         });
         //  Disconnect
         socket.on('disconnect', () => {
-            console.log('Disconnected from server');
+            console.log(`Disconnected from Patient Dashboard server (userID = ${patientID}`);
         });
 
         // Update daily surveys list
@@ -259,7 +350,7 @@ function PatientDashboard() {
 
         // Cleanup on component unmount
         return () => {
-            socket.emit("rem-socket-comm", { "userID": patientId });
+            socket.emit("rem-socket-comm", { "userID": patientID });
             socket.off('new-feedback');
             socket.off('new-survey');
             socket.disconnect();
@@ -340,7 +431,6 @@ function PatientDashboard() {
             .then(data => {
                 clearWaitingQueue();
                 toast.success('Saved Journal!');
-                console.log("Successfully saved the journal");
             })
             .catch(err => console.error('Error fetching data:', err));
     }
@@ -404,8 +494,8 @@ function PatientDashboard() {
         const patientId = localStorage.getItem("userID");
         const userID = localStorage.getItem("realUserID");
         const surveyID = e.target.getAttribute('incomptherapistsurveyid');
-        console.log(therapistSurveyQuestions);
-        console.log(therapistSurveyAnswers);
+        // console.log(therapistSurveyQuestions);
+        // console.log(therapistSurveyAnswers);
 
 
         fetch('https://mentcare-backend.onrender.com/completeTherapistSurvey', {
