@@ -57,6 +57,7 @@ function SettingsPage() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ 'realUserID': localStorage.getItem('realUserID') }),
         })
@@ -84,6 +85,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ realUserID: realUserID, userID: userID, userType: userType }),
         })
@@ -115,6 +117,7 @@ function SettingsPage() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",  // Ensure the request is sent as JSON
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ realUserID }),
         })
@@ -191,6 +194,7 @@ function SettingsPage() {
 
         const response = await fetch('http://localhost:5000/settingsUpdAccDetails', {
             method: 'POST',
+            headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
             body: formData,
         });
         if (response.ok) {
@@ -231,6 +235,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({
                 userId: userId, insCompUpd: insCompUpd === "" ? insComp : insCompUpd,
@@ -260,6 +265,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ userId: userId, patientPrivacy: event.target.value }),
         })
@@ -277,6 +283,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ userId: userId, userType: userType }),
         });

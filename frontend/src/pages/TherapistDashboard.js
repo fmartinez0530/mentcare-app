@@ -30,6 +30,7 @@ function TherapistDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ userId: therapistId }), // Send therapistId in the body
         })
@@ -65,6 +66,7 @@ function TherapistDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ userId: therapistId }), // Send therapistId in the body
         })
@@ -83,6 +85,7 @@ function TherapistDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ userId: therapistId, acceptingStatus: acceptingStatus }), // We send the current value of acceptingStatus to the backend
         })
@@ -109,6 +112,7 @@ function TherapistDashboard() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "http://localhost:5000",
                 },
                 body: JSON.stringify({ therapistId, surveyToSubmit: surveyQuestions }), // We send the current value of acceptingStatus to the backend
             })

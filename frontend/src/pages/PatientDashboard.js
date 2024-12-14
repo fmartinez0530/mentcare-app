@@ -229,6 +229,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ patientID }), // Send patientId in the body
         })
@@ -244,6 +245,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ patientID }), // Send patientId in the body
         })
@@ -259,6 +261,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ patientID }), // Send patientId in the body
         })
@@ -274,6 +277,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ patientID }), // Send patientId in the body
         })
@@ -290,6 +294,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ patientID }), // Send patientId in the body
         })
@@ -305,6 +310,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ patientID }), // Send patientId in the body
         })
@@ -424,6 +430,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({ "journalEntry": newEntry.value, patientId, journalId }),
         })
@@ -471,6 +478,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({
                 "userID": userID, "patientID": patientId, "dailySurveyID": dailySurveyID,
@@ -502,6 +510,7 @@ function PatientDashboard() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "http://localhost:5000",
             },
             body: JSON.stringify({
                 "userID": userID, "patientID": patientId, "surveyID": surveyID,

@@ -41,7 +41,7 @@ function Payment() {
             try {
                 const response = await fetch("http://localhost:5000/getDetails", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://localhost:5000", },
                     body: JSON.stringify({
                         patientId
                     }),
@@ -118,7 +118,7 @@ function Payment() {
         try {
             const response = await fetch("http://localhost:5000/submitPayment", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://localhost:5000", },
                 body: JSON.stringify({
                     patientId: patientId,
                     invoiceId: invoiceID,
