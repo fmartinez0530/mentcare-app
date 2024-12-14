@@ -26,7 +26,7 @@ function Login() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "http://localhost:5000",
+                "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
             },
             body: JSON.stringify({ email, password }),
         })

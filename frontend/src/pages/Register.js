@@ -117,7 +117,7 @@ function Register() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "http://localhost:5000",
+                    "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
                 },
                 body: JSON.stringify({ email }),
             });
@@ -142,7 +142,7 @@ function Register() {
             console.log(formData);
             const response = await fetch(`https://q0vvl.wiremockapi.cloud/verifyTherapistLicense?licenseNum=${licenseValue}`, {
                 method: 'GET',
-                headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
+                headers: { "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com", },
             });
             if (response.ok) {
                 // alert("LICENSE NUMBER IS VALID!")
@@ -204,7 +204,7 @@ function Register() {
             try {
                 const response = await fetch('https://mentcare-backend.onrender.com/registerPatient', {
                     method: 'POST',
-                    headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
+                    headers: { "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com", },
                     body: formData,
                 });
                 if (response.ok) {
@@ -264,7 +264,7 @@ function Register() {
                 try {
                     const response = await fetch('https://mentcare-backend.onrender.com/registerTherapist', {
                         method: 'POST',
-                        headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
+                        headers: { "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com", },
                         body: formData,
                     });
                     if (response.ok) {

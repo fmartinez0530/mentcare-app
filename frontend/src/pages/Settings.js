@@ -57,7 +57,7 @@ function SettingsPage() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "http://localhost:5000",
+                "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
             },
             body: JSON.stringify({ 'realUserID': localStorage.getItem('realUserID') }),
         })
@@ -85,7 +85,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "http://localhost:5000",
+                "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
             },
             body: JSON.stringify({ realUserID: realUserID, userID: userID, userType: userType }),
         })
@@ -117,7 +117,7 @@ function SettingsPage() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",  // Ensure the request is sent as JSON
-                "Access-Control-Allow-Origin": "http://localhost:5000",
+                "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
             },
             body: JSON.stringify({ realUserID }),
         })
@@ -194,7 +194,7 @@ function SettingsPage() {
 
         const response = await fetch('https://mentcare-backend.onrender.com/settingsUpdAccDetails', {
             method: 'POST',
-            headers: { "Access-Control-Allow-Origin": "http://localhost:5000", },
+            headers: { "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com", },
             body: formData,
         });
         if (response.ok) {
@@ -235,7 +235,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "http://localhost:5000",
+                "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
             },
             body: JSON.stringify({
                 userId: userId, insCompUpd: insCompUpd === "" ? insComp : insCompUpd,
@@ -265,7 +265,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "http://localhost:5000",
+                "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
             },
             body: JSON.stringify({ userId: userId, patientPrivacy: event.target.value }),
         })
@@ -283,7 +283,7 @@ function SettingsPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "http://localhost:5000",
+                "Access-Control-Allow-Origin": "https://mentcare-backend.onrender.com",
             },
             body: JSON.stringify({ userId: userId, userType: userType }),
         });
