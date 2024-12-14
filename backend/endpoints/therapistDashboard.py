@@ -42,7 +42,7 @@ def theraDashFunc():
         cursor.close()
         response = jsonify({"accepting": int(accepting), "survey" : data[0]})
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -120,7 +120,7 @@ def theraPatListFunc():
         
         response = jsonify({"patientData" : returnArray})
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -174,7 +174,7 @@ def theraAcceptFunc():
             if(accepting): # If "accepting" was 1, we tell the frontend it is now 0; Vice versa
                 response = jsonify({"inserted": 1, "accepting" : 0})
                 response.status_code = 200
-                response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+                response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
                 response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
                 response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -182,7 +182,7 @@ def theraAcceptFunc():
             else:
                 response = jsonify({"inserted": 1, "accepting" : 1})
                 response.status_code = 200
-                response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+                response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
                 response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
                 response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -191,7 +191,7 @@ def theraAcceptFunc():
             cursor.close()
             response = jsonify({"inserted": 0, "accepting" : 0})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -243,7 +243,7 @@ def theraUpdSurveyFunc():
             cursor.close()
             response = jsonify({"inserted": True})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -252,7 +252,7 @@ def theraUpdSurveyFunc():
             cursor.close()
             response = jsonify({"inserted": False})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'

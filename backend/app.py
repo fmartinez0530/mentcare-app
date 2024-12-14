@@ -71,7 +71,7 @@ app.register_blueprint(settingsPageData)
 
 @app.after_request
 def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -97,7 +97,7 @@ def defaultFunc():
     # return {"status": "Backend is alive"}
     response = jsonify({'status': 'Backend is alive'})
     response.status_code = 200
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -179,7 +179,7 @@ def navbarDataFunc():
             # return jsonify(totalResults)
             response = jsonify(totalResults)
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -187,7 +187,7 @@ def navbarDataFunc():
         else:
             response = jsonify({"message" : "User not found"})
             response.status_code = 404
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -215,7 +215,7 @@ def retriveProfilePicFunc():
             # else:
             response = jsonify({"profileImg": data[0]})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -223,7 +223,7 @@ def retriveProfilePicFunc():
         else:
             response = jsonify({"error": "Profile image is null"})
             response.status_code = 404
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -266,7 +266,7 @@ def delNotifFunc():
 
         response = jsonify({"message" : "Notification succesfully delete!"})
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -307,7 +307,7 @@ def updateSocketsNavFunc():
 
         response = jsonify({"message" : "Sockets navbar succesfully updated!"})
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'

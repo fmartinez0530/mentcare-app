@@ -80,7 +80,7 @@ def patientOrTherapistFunc():
             cursor.close()
             response = jsonify({"userType": user_type, "userID": fakeUserID, "realUserID": userID, "isActive" : isActive})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -88,7 +88,7 @@ def patientOrTherapistFunc():
         else:
             response = jsonify({"error": "No user found with the given email and password"})
             response.status_code = 404
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'

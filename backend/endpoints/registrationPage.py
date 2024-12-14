@@ -44,7 +44,7 @@ def validateEmailFunc():
     if(cursor.rowcount > 0):
         response = jsonify({"message" : "Email/User already exists"})
         response.status_code = 409
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -52,7 +52,7 @@ def validateEmailFunc():
     else:
         response = jsonify({"message" : "Email is good for use"})
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -208,7 +208,7 @@ def registerPatientFunc():
         cursor.close()
         response = jsonify({"message" : "User successfully registered", "patientID" : patientID, "userID" : userID})
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -337,7 +337,7 @@ def registerTherapistFunc():
 
         response = jsonify({"message" : "User successfully registered", "therapistID" : therapistID, "userID" : userID})
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'

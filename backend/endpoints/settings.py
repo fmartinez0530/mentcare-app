@@ -86,7 +86,7 @@ def settingsPageDataFunc():
         
         response = jsonify({"userName" : data1[0][0], "email" : data1[0][1], "patientPrivacy" : data2[0][0], "insComp" : data2[0][1], "insID" : data2[0][2], "insTier" : data2[0][3], "isActive" : isActive })
         response.status_code = 200
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -205,7 +205,7 @@ def settingsUpdAccDetailsFunc():
             print("SUCCESSFULLY UPDATED ACCOUNT DETAILS")
             response = jsonify({"inserted" : 1, "userName" : userName, "email" : email, "profileImg" : profileImg})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -214,7 +214,7 @@ def settingsUpdAccDetailsFunc():
             cursor.close()
             response = jsonify({"inserted" : 0})
             response.status_code = 404
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -302,7 +302,7 @@ def settingsUpdInsDetailsFunc():
             cursor.close()
             response = jsonify({"inserted" : 1, "insComp" : insComp, "insID" : insID, "insTier" : insTier})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -311,7 +311,7 @@ def settingsUpdInsDetailsFunc():
             cursor.close()
             response = jsonify({"inserted" : 0})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -360,7 +360,7 @@ def settingsUpdPrivacyFunc():
             cursor.close()
             response = jsonify({"inserted" : 1})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -369,7 +369,7 @@ def settingsUpdPrivacyFunc():
             cursor.close()
             response = jsonify({"inserted" : 0})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -419,7 +419,7 @@ def settingsRemAccFunc():
                 cursor.close()
                 response = jsonify({"deletion" : "Unpaid invoices"})
                 response.status_code = 500
-                response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+                response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
                 response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
                 response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -489,7 +489,7 @@ def settingsRemAccFunc():
             mysql.connection.commit()
             response = jsonify({"deletion" : "successful"})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -541,7 +541,7 @@ def settingsRemAccFunc():
 
             response = jsonify({"isActive" : isActive})
             response.status_code = 200
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
@@ -550,7 +550,7 @@ def settingsRemAccFunc():
             cursor.close()
             response = jsonify({"deletion" : "failed"})
             response.status_code = 500
-            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
             response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
             response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
