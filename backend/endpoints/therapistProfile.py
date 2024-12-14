@@ -64,7 +64,13 @@ def thersProfInfoFunc():
         therapistInfo = cursor.fetchone()
 
         if not therapistInfo:
-            return jsonify({"error": "Therapist not found"}), 404
+            response = jsonify({"error": "Therapist not found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
         cursor.execute(f"""
             SELECT therapistID
@@ -90,7 +96,13 @@ def thersProfInfoFunc():
     finally:
         cursor.close()
 
-    return jsonify({"Therapist": therapistInfo, "fives": counts[5], "fours": counts[4], "threes": counts[3], "twos": counts[2], "ones": counts[1]})
+    response = jsonify({"Therapist": therapistInfo, "fives": counts[5], "fours": counts[4], "threes": counts[3], "twos": counts[2], "ones": counts[1]})
+    response.status_code = 200
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
 
 @therapist_routes.route('/therapistReviewInfo', methods=['POST'])
 def theraReviewFunc():
@@ -169,7 +181,13 @@ def theraReviewFunc():
     finally:
         cursor.close()
 
-    return jsonify({"reviews": reviews})
+    response = jsonify({"reviews": reviews})
+    response.status_code = 200
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
 
 @therapist_routes.route('/therapistUpdateInfo', methods=['POST'])
 def theraUpdInfoFunc():
@@ -268,7 +286,13 @@ def theraUpdInfoFunc():
         print(5)
 
         print(therapistInfo)
-        return jsonify({"specializations": therapistInfo[0], "education": therapistInfo[1], "aboutMe": therapistInfo[2], "availability": therapistInfo[3], "pricing": therapistInfo[4], "pricingNum": therapistInfo[5] }), 200
+        response = jsonify({"specializations": therapistInfo[0], "education": therapistInfo[1], "aboutMe": therapistInfo[2], "availability": therapistInfo[3], "pricing": therapistInfo[4], "pricingNum": therapistInfo[5] })
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -316,7 +340,13 @@ def isCurrentTheraFunc():
         userType = request.json.get("userType")
 
         if(userType != "Patient"):
-            return jsonify({"isCurrentTherapist": 0, "swapable": 0 }), 200
+            response = jsonify({"isCurrentTherapist": 0, "swapable": 0 })
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         
         cursor = mysql.connection.cursor()
 
@@ -337,7 +367,13 @@ def isCurrentTheraFunc():
         therapistID = cursor.fetchone()[0]
         cursor.close()
 
-        return jsonify({"isCurrentTherapist": (therapistID == mainTherapistID), "swapable": (mainTherapistID == None or mainTherapistID == therapistID)  }), 200
+        response = jsonify({"isCurrentTherapist": (therapistID == mainTherapistID), "swapable": (mainTherapistID == None or mainTherapistID == therapistID)  })
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -464,8 +500,13 @@ def addRemTheraFunc():
             if str(theraUserID) in app.socketsNavbar:
                 app.socketio.emit("update-navbar", room=app.socketsNavbar[str(theraUserID)])
 
-
-        return jsonify({"nowHasTherapist": hasThera }), 200
+        response = jsonify({"nowHasTherapist": hasThera })
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -532,6 +573,12 @@ def leaveReviewFunc():
         mysql.connection.commit()
         cursor.close()
 
-        return jsonify({"reviewSent": 1 }), 200
+        response = jsonify({"reviewSent": 1 })
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}", "reviewSent": 0 }

@@ -42,9 +42,21 @@ def validateEmailFunc():
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT email FROM users WHERE email LIKE %s", (email, ))
     if(cursor.rowcount > 0):
-        return jsonify({"message" : "Email/User already exists"}), 409
+        response = jsonify({"message" : "Email/User already exists"})
+        response.status_code = 409
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     else:
-        return jsonify({"message" : "Email is good for use"}), 200
+        response = jsonify({"message" : "Email is good for use"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     
 @registrationPageData.route("/registerPatient", methods=['POST'])
 def registerPatientFunc():
@@ -194,7 +206,13 @@ def registerPatientFunc():
         patientID = data[0]
 
         cursor.close()
-        return jsonify({"message" : "User successfully registered", "patientID" : patientID, "userID" : userID}), 200
+        response = jsonify({"message" : "User successfully registered", "patientID" : patientID, "userID" : userID})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error":  f"{err}"}), 400
     
@@ -317,6 +335,12 @@ def registerTherapistFunc():
 
         cursor.close()
 
-        return jsonify({"message" : "User successfully registered", "therapistID" : therapistID, "userID" : userID}), 200
+        response = jsonify({"message" : "User successfully registered", "therapistID" : therapistID, "userID" : userID})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error":  f"{err}"}), 400

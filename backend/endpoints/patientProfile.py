@@ -62,7 +62,13 @@ def get_patient_overview(userID):
         patient_data = cursor.fetchone()
 
         if not patient_data:
-            return jsonify({"error": "Patient not found"}), 404
+            response = jsonify({"error": "Patient not found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
         # Extract basic patient info
         userName, profileImg, allRecordsViewable, mainTherapistID = patient_data
@@ -138,7 +144,7 @@ def get_patient_overview(userID):
 
         cursor.close()
 
-        response = {
+        responseData = {
             "userName": userName,
             "profileImg": profileImg,
             "allRecordsViewable": bool(allRecordsViewable),
@@ -148,7 +154,13 @@ def get_patient_overview(userID):
             "journals": journals_data,
         }
 
-        return jsonify(response), 200
+        response = jsonify(responseData)
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -210,7 +222,13 @@ def get_daily_survey_details(completionID):
         survey = cursor.fetchone()
 
         if not survey:
-            return jsonify({"error": "Survey not found"}), 404
+            response = jsonify({"error": "Survey not found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
         survey_data = {
             "completionID": survey[0],
@@ -226,7 +244,13 @@ def get_daily_survey_details(completionID):
         }
 
         cursor.close()
-        return jsonify(survey_data), 200
+        response = jsonify(survey_data)
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -274,7 +298,13 @@ def add_feedback():
         mysql.connection.commit()
         cursor.close()
 
-        return jsonify({"message": "Feedback added successfully"}), 200
+        response = jsonify({"message": "Feedback added successfully"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -321,7 +351,13 @@ def add_journal():
         mysql.connection.commit()
         cursor.close()
 
-        return jsonify({"message": "Journal added successfully"}), 200
+        response = jsonify({"message": "Journal added successfully"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

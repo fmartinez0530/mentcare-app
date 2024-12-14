@@ -51,9 +51,21 @@ def getJournalsFunc():
         if data:
             columns = [column[0] for column in cursor.description]
             results = [dict(zip(columns, row)) for row in data]
-            return jsonify(results), 200
+            response = jsonify(results)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"message":"no journals found"}), 404
+            response = jsonify({"message":"no journals found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
     except Exception as err:
         return {"error":  f"{err}"}
@@ -73,9 +85,21 @@ def getFeedbackFunc():
         if feedback_data:
             feedback_columns = [column[0] for column in cursor.description]
             feedback_results = [dict(zip(feedback_columns, row)) for row in feedback_data]
-            return jsonify(feedback_results), 200
+            response = jsonify(feedback_results)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"message":"no feedback found"}), 404
+            response = jsonify({"message":"no feedback found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
     except Exception as err:
         return {"error":  f"{err}"}
@@ -129,9 +153,21 @@ def getDailySurveysFunc():
         if daily_survey_data:
             daily_survey_columns = [column[0] for column in cursor.description]
             daily_survey_results = [dict(zip(daily_survey_columns, row)) for row in daily_survey_data]
-            return jsonify(daily_survey_results), 200
+            response = jsonify(daily_survey_results)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"message":"no daily surveys found"}), 404
+            response = jsonify({"message":"no daily surveys found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
     except Exception as err:
         return {"error":  f"{err}"}
@@ -152,9 +188,21 @@ def getIncompleteTherapistSurveysFunc():
         if (incomp_surveys_data):
             incomp_surveys_columns = [column[0] for column in cursor.description]
             incomp_surveys_results = [dict(zip(incomp_surveys_columns, row)) for row in incomp_surveys_data]
-            return jsonify(incomp_surveys_results), 200
+            response = jsonify(incomp_surveys_results)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"message":"no incomplete therapist surveys found"}), 404
+            response = jsonify({"message":"no incomplete therapist surveys found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -177,9 +225,21 @@ def getCompleteTherapistSurveysFunc():
         if comp_surveys_data:
             comp_surveys_columns = [column[0] for column in cursor.description]
             comp_surveys_results = [dict(zip(comp_surveys_columns, row)) for row in comp_surveys_data]
-            return jsonify(comp_surveys_results), 200
+            response = jsonify(comp_surveys_results)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"message":"no complete therapist surveys found"}), 404
+            response = jsonify({"message":"no complete therapist surveys found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
 
@@ -198,9 +258,21 @@ def getInvoicesFunc():
         if invoices_data:
             invoices_columns = [column[0] for column in cursor.description]
             invoices_results = [dict(zip(invoices_columns, row)) for row in invoices_data]
-            return jsonify(invoices_results), 200
+            response = jsonify(invoices_results)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"message":"no complete therapist surveys found"}), 404
+            response = jsonify({"message":"no complete therapist surveys found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -254,7 +326,13 @@ def save():
                     ''', (journalEntry, patientId, journalId))
         mysql.connection.commit()
         cursor.close()
-        return jsonify({"message" : "Journal saved successfully"}), 200
+        response = jsonify({"message" : "Journal saved successfully"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -303,7 +381,13 @@ def sendFeedbackFunc():
                 'feedback': feedback
             }, room=app.sockets[str(realUserID)])
 
-        return jsonify({"message": "Success"}), 200
+        response = jsonify({"message": "Success"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
@@ -366,7 +450,13 @@ def sendTherapistSurveyFunc():
         
         if therapistID is None:
             # print("TherapistID not found for surveyID:", surveyID)
-            return jsonify({"error": "Therapist not found for this survey."}), 404
+            response = jsonify({"error": "Therapist not found for this survey."})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         
         therapistID = therapistID[0]
 
@@ -388,7 +478,13 @@ def sendTherapistSurveyFunc():
         if str(userID) in app.sockets:
             app.socketio.emit('submit-therapist-survey', room=app.sockets[str(userID)])
         # Return a success response
-        return jsonify({"message": "Success"}), 200
+        response = jsonify({"message": "Success"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
@@ -480,6 +576,12 @@ def sendDailySurveyFunc():
                 'stress': stress
             }, room=app.sockets[realUserID])
 
-        return jsonify({"message": "Survey data submitted successfully!"}), 200
+        response = jsonify({"message": "Survey data submitted successfully!"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500

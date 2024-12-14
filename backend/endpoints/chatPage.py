@@ -53,7 +53,13 @@ def get_charging():
         cursor.close()
         # print(charging)
 
-        return jsonify(charging)
+        response = jsonify(charging)
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     
     except Exception as err:
         return jsonify({"error": str(err)}), 500
@@ -107,7 +113,13 @@ def set_chat_status():
 
         mysql.connection.commit()
         cursor.close()
-        return jsonify({"message": "Success"}), 200
+        response = jsonify({"message": "Success"}), 200
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     
     except Exception as err:
         return jsonify({"error": str(err)}), 500
@@ -158,7 +170,13 @@ def send_invoice():
         
         mysql.connection.commit()
         cursor.close()
-        return jsonify({"message": "Success"}), 200
+        response = jsonify({"message": "Success"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
 
     except Exception as err:
         return jsonify({"error": str(err)}), 500
@@ -231,14 +249,26 @@ def get_user_chats():
                 WHERE tpl.patientID = %s
             ''', (choose_id,))
         else:
-            return jsonify({"error": "Invalid user type"}), 500
+            response = jsonify({"error": "Invalid user type"})
+            response.status_code = 500
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
         data = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
         results = [dict(zip(columns, row)) for row in data]
         cursor.close()
 
-        return jsonify(results), 200
+        response = jsonify(results)
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
@@ -282,7 +312,13 @@ def startChatFunc():
                 'therapistID': therapistID
             }, room=app.sockets[str(userID)])
 
-        return jsonify({"message": "Chat started successfully!"}), 200
+        response = jsonify({"message": "Chat started successfully!"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
@@ -323,7 +359,13 @@ def endChatFunc():
                 'message':'inactive'
             }, room=app.sockets[str(userID)])
 
-        return jsonify({"message": "Chat ended successfully!"}), 200
+        response = jsonify({"message": "Chat ended successfully!"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
@@ -368,7 +410,13 @@ def requestChatFunc():
                 'patientID':patientID
             }, room=app.sockets[str(userID)])
 
-        return jsonify({"message": "Requested"}), 200
+        response = jsonify({"message": "Requested"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
@@ -421,7 +469,13 @@ def send_message():
                 if "chats" not in content:
                     raise ValueError("Err Json")
             except Exception as e:
-                return jsonify({"error": f"Err: {str(e)}"}), 500
+                response = jsonify({"error": f"Err: {str(e)}"})
+                response.status_code = 500
+                response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+                response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+                return response
 
             content['chats'].append({"msg": message, "sender": sender})
 
@@ -460,7 +514,12 @@ def send_message():
             app.socketio.emit('new-message', { 'patientId': patient_id, 'therapistId': therapist_id, 'message': message, 'sender': sender }, room=room)
             print("New message sent to room " + room + " - " + message)
 
-        return jsonify({"message": "Success"}), 200
-
+        response = jsonify({"message": "Success"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500

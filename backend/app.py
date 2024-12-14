@@ -86,7 +86,14 @@ def defaultFunc():
               type: string
               example: "Backend is alive"
     """
-    return {"status": "Backend is alive"}
+    # return {"status": "Backend is alive"}
+    response = jsonify({'status': 'Backend is alive'})
+    response.status_code = 200
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
 
 @app.route("/navbarData", methods=['POST'])
 def navbarDataFunc():
@@ -161,9 +168,22 @@ def navbarDataFunc():
             else:
                 totalResults.append(None)
             
-            return jsonify(totalResults)
+            # return jsonify(totalResults)
+            response = jsonify(totalResults)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"message" : "User not found"}), 404
+            response = jsonify({"message" : "User not found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
 
     except Exception as err:
         return {"error":  f"{err}"}
@@ -185,9 +205,21 @@ def retriveProfilePicFunc():
             #     img_stream = BytesIO(profile_img_data)
             #     return send_file(img_stream, mimetype='image/jpeg')
             # else:
-            return jsonify({"profileImg": data[0]}), 200
+            response = jsonify({"profileImg": data[0]})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
-            return jsonify({"error": "Profile image is null"}), 404
+            response = jsonify({"error": "Profile image is null"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -224,7 +256,13 @@ def delNotifFunc():
         mysql.connection.commit()
         cursor.close()
 
-        return jsonify({"message" : "Notification succesfully delete!"}), 200
+        response = jsonify({"message" : "Notification succesfully delete!"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -259,7 +297,13 @@ def updateSocketsNavFunc():
         print("CURRENT NAVBAR SOCKETS CONNECTIONS: ", socketsNavbar)
         #print(f"Added socketId {request.sid} for userId {realUserID} to socketsNavbar")
 
-        return jsonify({"message" : "Sockets navbar succesfully updated!"}), 200
+        response = jsonify({"message" : "Sockets navbar succesfully updated!"})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
 

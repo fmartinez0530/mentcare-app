@@ -40,7 +40,13 @@ def theraDashFunc():
         cursor.execute(f'SELECT content -> "$.survey" AS surveyData FROM therapists WHERE therapistID = {userId}')
         data = cursor.fetchall()
         cursor.close()
-        return jsonify({"accepting": int(accepting), "survey" : data[0]}), 200
+        response = jsonify({"accepting": int(accepting), "survey" : data[0]})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -112,7 +118,13 @@ def theraPatListFunc():
                 returnArray.append((thing[0], "No Feedback Sent", thing[1]))
             print(returnArray)
         
-        return jsonify({"patientData" : returnArray}), 200
+        response = jsonify({"patientData" : returnArray})
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return {"error":  f"{err}"}
 
@@ -160,12 +172,30 @@ def theraAcceptFunc():
         if(cursor.rowcount > 0): # We ensure the table was modified
             cursor.close()
             if(accepting): # If "accepting" was 1, we tell the frontend it is now 0; Vice versa
-                return jsonify({"inserted": 1, "accepting" : 0}), 200
+                response = jsonify({"inserted": 1, "accepting" : 0})
+                response.status_code = 200
+                response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+                response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+                return response
             else:
-                return jsonify({"inserted": 1, "accepting" : 1}), 200
+                response = jsonify({"inserted": 1, "accepting" : 1})
+                response.status_code = 200
+                response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+                response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+                return response
         else:
             cursor.close()
-            return jsonify({"inserted": 0, "accepting" : 0}), 200
+            response = jsonify({"inserted": 0, "accepting" : 0})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -211,9 +241,21 @@ def theraUpdSurveyFunc():
         mysql.connection.commit()
         if(cursor.rowcount > 0): # We ensure the table was modified
             cursor.close()
-            return jsonify({"inserted": True}), 200
+            response = jsonify({"inserted": True})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
             cursor.close()
-            return jsonify({"inserted": False}), 200
+            response = jsonify({"inserted": False})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return jsonify({"error":  f"{err}"})

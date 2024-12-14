@@ -116,7 +116,13 @@ def get_therapists():
             }
             therapists.append(therapist)
 
-        return jsonify(therapists), 200
+        response = jsonify(therapists)
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
@@ -162,7 +168,13 @@ def get_profile_image(therapist_id):
             img_stream = BytesIO(data[0])
             return send_file(img_stream, mimetype='image/jpeg')
         else:
-            return jsonify({"error": "Profile image not found"}), 404
+            response = jsonify({"error": "Profile image not found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 

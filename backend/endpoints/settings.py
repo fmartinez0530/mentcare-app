@@ -84,8 +84,13 @@ def settingsPageDataFunc():
         cursor.close()
         print({"userName" : data1[0][0], "email" : data1[0][1], "patientPrivacy" : data2[0][0], "insuranceCompany" : data2[0][1], "insuranceID" : data2[0][2], "insuranceTier" : data2[0][3], "isActive" : isActive })
         
-        return jsonify({"userName" : data1[0][0], "email" : data1[0][1],
-                        "patientPrivacy" : data2[0][0], "insComp" : data2[0][1], "insID" : data2[0][2], "insTier" : data2[0][3], "isActive" : isActive }), 200
+        response = jsonify({"userName" : data1[0][0], "email" : data1[0][1], "patientPrivacy" : data2[0][0], "insComp" : data2[0][1], "insID" : data2[0][2], "insTier" : data2[0][3], "isActive" : isActive })
+        response.status_code = 200
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
     
     except Exception as err:
         return {"error":  f"{err}"}
@@ -195,12 +200,25 @@ def settingsUpdAccDetailsFunc():
             cursor.close()
             print(app.socketsNavbar)
             print(realUserId)
-            app.socketio.emit('update-navbar', room=app.socketsNavbar[realUserId])
+            if str(realUserId) in app.socketsNavbar:
+                app.socketio.emit('update-navbar', room=app.socketsNavbar[str(realUserId)])
             print("SUCCESSFULLY UPDATED ACCOUNT DETAILS")
-            return jsonify({"inserted" : 1, "userName" : userName, "email" : email, "profileImg" : profileImg}), 200
+            response = jsonify({"inserted" : 1, "userName" : userName, "email" : email, "profileImg" : profileImg})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
             cursor.close()
-            return jsonify({"inserted" : 0}), 404
+            response = jsonify({"inserted" : 0})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
     
@@ -282,10 +300,22 @@ def settingsUpdInsDetailsFunc():
             insID = data[1]
             insTier = data[2]
             cursor.close()
-            return jsonify({"inserted" : 1, "insComp" : insComp, "insID" : insID, "insTier" : insTier}), 200
+            response = jsonify({"inserted" : 1, "insComp" : insComp, "insID" : insID, "insTier" : insTier})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
             cursor.close()
-            return jsonify({"inserted" : 0}), 200
+            response = jsonify({"inserted" : 0})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
 
@@ -328,10 +358,22 @@ def settingsUpdPrivacyFunc():
         mysql.connection.commit()
         if(cursor.rowcount > 0): # We ensure the table was modified
             cursor.close()
-            return jsonify({"inserted" : 1}), 200
+            response = jsonify({"inserted" : 1})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
             cursor.close()
-            return jsonify({"inserted" : 0}), 200
+            response = jsonify({"inserted" : 0})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
     except Exception as err:
         return {"error":  f"{err}"}
 
@@ -375,7 +417,13 @@ def settingsRemAccFunc():
             cursor.execute(f'SELECT invoiceID FROM invoices WHERE invoices.patientID = {userId}')
             if(cursor.rowcount > 0):
                 cursor.close()
-                return jsonify({"deletion" : "Unpaid invoices"}), 500
+                response = jsonify({"deletion" : "Unpaid invoices"})
+                response.status_code = 500
+                response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+                response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+                return response
 
             cursor.execute(f'''
                 SELECT users.userID, users.userName, patients.mainTherapistID
@@ -439,7 +487,13 @@ def settingsRemAccFunc():
                     app.socketio.emit("update-navbar", room=app.socketsNavbar[str(theraUserID)])
             
             mysql.connection.commit()
-            return jsonify({"deletion" : "successful"}), 200
+            response = jsonify({"deletion" : "successful"})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         elif (userType == "Therapist"):
             #   Set therapist as Active or Inactive
             cursor.execute(f'''
@@ -485,10 +539,22 @@ def settingsRemAccFunc():
                     if str(patientUserID[0]) in app.socketsNavbar:
                         app.socketio.emit("update-navbar", room=app.socketsNavbar[str(patientUserID[0])])
 
-            return jsonify({"isActive" : isActive}), 200
+            response = jsonify({"isActive" : isActive})
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         else:
             cursor.close()
-            return jsonify({"deletion" : "failed"}), 500
+            response = jsonify({"deletion" : "failed"})
+            response.status_code = 500
+            response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
         
         # mysql.connection.commit()
         
