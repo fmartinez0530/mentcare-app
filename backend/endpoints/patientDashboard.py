@@ -641,7 +641,7 @@ def checkInsFunc():
         return jsonify({"error": str(err)}), 500
     
 @PatientDashboardData.route('/payInvoiceInsurance', methods=['POST'])
-def checkInsFunc():
+def payInvoiceInsFunc():
     try:
         invoiceID = request.json.get('invoiceID')
         cursor = mysql.connection.cursor()
