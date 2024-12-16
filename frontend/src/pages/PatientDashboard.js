@@ -591,9 +591,29 @@ function PatientDashboard() {
         hidePopUp(e, x);
     }
 
-    function payInvoice(invoiceID, amountDue, therapistName) {
+    async function payInvoice(invoiceID, amountDue, therapistName) {
         //console.log(e.target.getAttribute('invoiceid'));
-        navigate('/payment', { state: { invoiceID: invoiceID, amountDue: amountDue, therapistName: therapistName } })
+        const response = await fetch("https://mentcare-backend.onrender.com/checkInsurance", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "patientID": localStorage.get('userID'),
+            }),
+        });
+
+        if (response.ok) {
+            toast.success("You're insurance has paid the invoice for you!")
+            const response1 = await fetch("https://mentcare-backend.onrender.com/payInvoiceInsurance", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    "invoiceID": invoiceID,
+                }),
+            });
+        } else {
+            navigate('/payment', { state: { invoiceID: invoiceID, amountDue: amountDue, therapistName: therapistName } })
+        }
+
     }
 
     const handleInputChange = (questionIndex, value, type) => {
