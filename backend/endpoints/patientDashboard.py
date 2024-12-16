@@ -625,3 +625,28 @@ def sendDailySurveyFunc():
         return response
     except Exception as err:
         return jsonify({"error": str(err)}), 500
+
+@PatientDashboardData.route('/checkInsurance', method=['POST'])
+def checkInsFunc():
+    try:
+        patientID = request.json.get('patientID')
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT insuranceCompany, insuranceID, insuranceTier FROM patients WHERE patientID = %s", (patientID, ))
+        data = cursor.fetchone()
+        if data:
+           return jsonify({'message' : 'success'}), 200
+        else:
+            return jsonify({'message' : 'success'}), 404
+    except Exception as err:
+        return jsonify({"error": str(err)}), 500
+    
+@PatientDashboardData.route('/payInvoiceInsurance', method=['POST'])
+def checkInsFunc():
+    try:
+        invoiceID = request.json.get('invoiceID')
+        cursor = mysql.connection.cursor()
+        cursor.execute('''DELETE FROM invoices WHERE invoiceID = %s;''', (invoiceID,))
+        return jsonify({'message' : 'success'}), 200
+    except Exception as err:
+        return jsonify({"error": str(err)}), 500
+    
