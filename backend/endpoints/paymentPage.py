@@ -187,11 +187,11 @@ def submit_payment():
                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (patient_id, card_num, cvc, exp_date, first_name, last_name, city, billing_address, state, country, zip, phone))
             print("Got through")
 
-        if (check == False and alreadyIn == True):
+        elif  (check == False and alreadyIn == True):
             print('deleted')
             cursor.execute('''DELETE FROM details WHERE patientID = %s;''', (patient_id,))
 
-        if (check == True and alreadyIn == True):
+        elif (check == True and alreadyIn == True):
             cursor.execute('''UPDATE details SET 
                 cardNum = %s, cvc = %s, expDate = %s, firstName = %s, 
                 lastName = %s, city = %s, billingAddress = %s, state = %s, 
