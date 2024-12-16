@@ -144,7 +144,7 @@ function Payment() {
             if (response.ok) {
                 notifySuccess();
                 setTimeout(() => {
-                    window.location.href = "http://localhost:3000/dashboard";
+                    window.location.href = "https://mentcare-frontend.onrender.com/dashboard";
                 }, 2000);
             } else {
                 notifyFail();
