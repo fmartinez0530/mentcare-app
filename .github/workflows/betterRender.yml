@@ -73,6 +73,7 @@ jobs:
           find ./frontend/src -type f -exec sed -i 's/http:\/\/localhost:5000\//https:\/\/mentcare-backend.onrender.com\//g' {} +
           find ./frontend/src -type f -exec sed -i 's/\"http:\/\/localhost:5000\"/\"https:\/\/mentcare-backend.onrender.com\"/g' {} +
           find ./frontend/src -type f -exec sed -i 's/http:\/\/127.0.0.1:5000/https:\/\/mentcare-backend.onrender.com/g' {} +
+          find ./frontend/src -type f -exec sed -i 's/http:\/\/localhost:3000/https:\/\/mentcare-frontend.onrender.com/g' {} +
           find ./frontend/src -type f -exec sed -i "s#io('http://localhost:5000')#io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']})#g" {} +
       - name: Stage and commit changes to frontend branch
         run: |
