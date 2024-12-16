@@ -344,6 +344,7 @@ function Register() {
                         setPageTwoVisibility('visible');
                         setPageThreeVisibility('hidden');
                         setPageFourVisibility('hidden');
+                        console.log("success hide next");
                     }
                 }
                 else {
@@ -393,6 +394,7 @@ function Register() {
                 setPageTwoVisibility('hidden');
                 setPageThreeVisibility('hidden');
                 setPageFourVisibility('hidden');
+                console.log("success hide");
             }
             else if (pageThreeVisibility === 'visible') {
                 setPageOneVisibility('hidden');
@@ -815,7 +817,7 @@ function Register() {
                             <div className='flex-col'>
                                 <div className='flex-col reg-input-container'>
                                     <label>Gender</label>
-                                    <div className='flex-row' style={{ gap: '5px' }}>
+                                    <div className='flex-row therapistgenders' style={{ gap: '5px' }}>
                                         <Button
                                             variant="outlined"
                                             className='flex-col'
@@ -873,11 +875,11 @@ function Register() {
                         </div>
                     </form>
                     <div className='flex-row flex-centered'>
-                        <input className='pageBtn' type='submit' value={'NEXT'} onClick={(e) => goToNextPage(e, 1, 'Therapist')}></input>
+                        <input className='pageBtn therapist' type='submit' value={'NEXT'} onClick={(e) => goToNextPage(e, 1, 'Therapist')}></input>
                     </div>
                 </div>
 
-                < div className={`register-form flex-col flex-centered ${therapistPageTwoVisibility}`} >
+                < div className={`register-form flex-col flex-centered ${therapistPageTwoVisibility} therapistinfo`} >
                     <div className='register-pic-container'>
                         <div className='flex-col' style={{ alignItems: 'center' }}>
                             <h1 className='title'>REGISTER</h1>

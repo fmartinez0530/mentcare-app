@@ -1,16 +1,40 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 import time
 
-service = Service("./chromedriver-win64/chromedriver.exe")
-driver = webdriver.Chrome(service=service)
+# service = Service("./chromedriver-win64/chromedriver.exe")
+# driver = webdriver.Chrome(service=service)
+
+driver_path = "E:/CS490/cs490_gp/tests/chromedriver-win64/chromedriver.exe"
+brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+
+option = webdriver.ChromeOptions()
+option.binary_location = brave_path
+service = Service(executable_path=driver_path)
+driver = webdriver.Chrome(service=service, options=option)
 
 try:
     driver.get("http://localhost:3000/login")
     wait = WebDriverWait(driver, 15)
+
+    script = """
+    var testMessage = document.createElement('div');
+    testMessage.innerText = "<div>FEATURE #6: PATIENT CAN TAKE DAILY SURVEYS AND VIEW RESULTS</div>";
+    testMessage.style.position = "fixed";
+    testMessage.style.bottom = "10px";
+    testMessage.style.left = "10px";
+    testMessage.style.backgroundColor = "yellow";
+    testMessage.style.color = "black";
+    testMessage.style.zIndex = "9999";
+    testMessage.style.padding = "10px";
+    testMessage.style.fontSize = "16pt";
+    document.body.appendChild(testMessage);
+    """
+    driver.execute_script(script)
 
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
     email_input.send_keys("john.smith@example.com")
@@ -23,7 +47,19 @@ try:
     wait.until(EC.url_contains("/dashboard"))
     print("Login successful, now on the dashboard.")
 
-    time.sleep(3) 
+    time.sleep(3)
+    multi_metric_checkbox = driver.find_element(By.XPATH, "//input[@type='checkbox']")
+    if not multi_metric_checkbox.is_selected():
+        multi_metric_checkbox.click()
+    print("Toggled 'Show Multiple Metrics' checkbox.")
+    time.sleep(2)
+
+    metric_buttons = driver.find_elements(By.CSS_SELECTOR, ".metric-buttons")
+    for button in metric_buttons:
+        ActionChains(driver).move_to_element(button).click().perform()
+        print(f"Clicked on metric: {button.text}")
+        time.sleep(1) 
+
     survey_buttons = driver.find_elements(By.CSS_SELECTOR, ".card-buttons")
     survey_clicked = False
     for button in survey_buttons:
@@ -42,6 +78,7 @@ try:
                 question.clear()
                 question.send_keys(f"Sample answer {idx + 1}")
                 print(f"Answered question {idx + 1} with 'Sample answer {idx + 1}'.")
+                time.sleep(1)
 
         try:
             submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
@@ -51,6 +88,7 @@ try:
                 submit_button.click()
                 print("Survey submitted successfully. Exiting program.")
                 assert True
+                time.sleep(3)
                 break 
         except Exception:
             print("No SUBMIT button found. Checking for NEXT button.")

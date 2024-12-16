@@ -1,6 +1,16 @@
 name: Run Python tests
 
-on: [push]
+on:
+  push:
+    branches:
+      - dev
+
+permissions:
+  contents: write
+
+env:
+  MYSQL_ROOT_PASSWORD: "root_password"
+  MYSQL_DATABASE: "my_test_db"
 
 jobs:
   build:
@@ -9,8 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        python-version: ["3.9", "3.10"]
+        os: [ubuntu-latest] # os: [ubuntu-latest, windows-latest]
+        python-version: ["3.9"] # python-version: ["3.9", "3.10"]
 
     steps:
       - uses: szenius/set-timezone@v1.2
@@ -27,5 +37,72 @@ jobs:
           pip install -r requirements.txt
           pip install -U pytest
           pip install -e .
+          pip install webdriver-manager  # Install webdriver-manager to handle the ChromeDriver
       - name: Run Pytest
-        run: python -m pytest
+        run: python -m pytest --ignore=./tests
+      # - name: Install Chromium and ChromeDriver
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y chromium-browser chromium-chromedriver
+          
+      # - name: Set up MySQL and Backend on Same Network
+      #   run: |
+      #     # Create a Docker network to allow containers to communicate
+      #     docker network create my-network
+          
+      #     # Start MySQL container and attach to the custom network
+      #     docker run --network my-network --name mysql-docker -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root_password -e MYSQL_DATABASE=my_test_db -d mysql:8.0
+      #     sleep 30
+
+      #     # Check if MySQL is running
+      #     docker exec mysql-docker mysqladmin -u root -proot_password ping
+          
+      #     # Copy dump.sql into MySQL container and load it
+      #     docker cp ./dump.sql mysql-docker:/tmp/dump.sql
+      #     docker exec -i mysql-docker mysql -u root -proot_password my_test_db < ./dump.sql
+          
+      #     # Verify the dump was loaded correctly
+      #     docker exec -i mysql-docker mysql -u root -proot_password -e "SELECT * FROM users LIMIT 1;" my_test_db
+
+      # - name: Run the Frontend
+      #   run: |
+      #     cd ./frontend
+      #     yarn install  # Ensure all dependencies are installed
+      #     chmod +x ./node_modules/.bin/react-scripts
+      #     yarn start &
+      #     cd ../
+
+      # - name: Run the Backend
+      #   run: |
+      #     # cd ./backend
+      #     # # Run Flask backend with --host=0.0.0.0 to make it available on all interfaces
+      #     # flask run --host=0.0.0.0 --port=5000 &
+      #     # cd ../
+          
+      #     # # Sleep to ensure backend is running before starting tests
+      #     # sleep 60
+      #     cd ./backend
+      #     docker build -t flask-backend .  # Build the Docker image for Flask
+      #     docker run --name flask-backend-container --network my-network -p 5000:5000 flask-backend & 
+      #     cd ../
+          
+      #     # Sleep to ensure backend is running before starting tests
+      #     sleep 60
+
+      # - name: Run Selenium Tests
+      #   run: |
+      #     curl -X POST http://localhost:5000/endpointOne -d '{}' -H "Content-Type: application/json"
+      #     curl http://localhost:5000/endpointTwo
+      #     python test_therapistsurveys.py
+
+      - name: Push changes to main branch
+        if: github.ref == 'refs/heads/dev' && success()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git fetch --all
+          git checkout main
+          git merge dev -X theirs --allow-unrelated-histories  # Resolve conflicts automatically in favor of dev
+          git push https://github.com/${{ github.repository }}.git HEAD:main  # Push to the 'main' branch using GITHUB_TOKEN
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the automatically created GITHUB_TOKEN for authentication

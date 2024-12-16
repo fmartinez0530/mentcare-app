@@ -12,10 +12,12 @@ socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000", methods=[
 sockets = {}
 socketsNavbar = {}
 
+# comment to cause github action to run
 app.config['MYSQL_HOST'] = 'localhost'
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = "@ElPolloMan03"
-app.config["MYSQL_DB"] = "cs490_GP"
+app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root_password'
+app.config['MYSQL_DB'] = 'my_test_db'
 
 mysql = MySQL(app)
 
@@ -67,6 +69,16 @@ app.register_blueprint(TherapistDashboardData)
 
 from endpoints.settings import settingsPageData
 app.register_blueprint(settingsPageData)
+
+@app.before_request
+def handle_options():
+    if request.method == "OPTIONS":
+        response = app.make_response("")
+        response.headers["Access-Control-Allow-Origin"] = "http://localhost:3000"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        return response, 200
 
 @app.after_request
 def add_cors_headers(response):
@@ -347,7 +359,7 @@ def initializeSocketCommunication(data):
     userId = data.get('userID')
     socketId = request.sid
     socketsNavbar[userId] = socketId
-    print("CURRENT SOCKETS CONNECTIONS: ", socketsNavbar)
+    print("CURRENT NAVBAR SOCKETS CONNECTIONS: ", socketsNavbar)
     print(f"Added socketId {socketId} for userId {userId} to socketsNavbar")
 
 #   Removes socket connection for the user's navbar

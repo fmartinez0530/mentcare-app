@@ -162,9 +162,11 @@ cython_debug/
 #.idea/
 
 # Stuff I added
-api/
-frontend/node_modules/
-backend/node_modules/
+/api
+# /backend/node_modules
+# /frontend/node_modules
 start-all.bat
 start-backend.bat
 start-frontend.bat
+.gitignore
+resetDB.bat
