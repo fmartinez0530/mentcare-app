@@ -4,6 +4,12 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 200px;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.landing-heading {
+    color: rgb(13, 131, 92);
+    font-size: 40pt;
 }
 
 .video-section {
@@ -30,10 +36,9 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    color: rgb(10, 95, 67);
+    color: rgb(13, 131, 92);
     text-align: center;
-    font-size: 24px;
-    font-family: 'Times New Roman';
+    font-size: 24pt;
 }
 
 .fade-text {
@@ -60,6 +65,17 @@
     margin: 20px 0;
 }
 
+.about-us {
+    font-size: 15pt;
+}
+
+.testimonial {
+    width: 600px;
+    text-align: left;
+    font-size: 15pt;
+    line-height: 2em;
+}
+
 .testimonial-users-section {
     text-align: center;
 }
@@ -67,15 +83,15 @@
 .testimonial-users-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 60px;
     align-items: center;
 }
 
 .testimonial-user {
     display: flex;
     align-items: center;
-    width: 80%;
-    gap: 20px;
+    width: 70%;
+    gap: 40px;
 }
 
 .testimonial-user.left {
@@ -86,12 +102,22 @@
     flex-direction: row-reverse;
 }
 
-.profile-picture {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.landing-img-circle-mask {
+    width: 150px;
+    height: 150px;
+    mask-image: url('../assets/images/circle_mask.png');
+    mask-repeat: no-repeat;
+    mask-size: cover;
+    mask-position: center;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
+.landing-profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .faq-section {
     margin: 20px 0;
@@ -125,11 +151,12 @@
 
 .faq-question {
     font-weight: bold;
+    font-size: 14pt;
 }
 
 .faq-answer {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 13pt;
     color: #333;
     text-align: center;
 }
@@ -152,16 +179,27 @@
 }
 
 .username {
-    font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
+    font-size: 16pt;
 }
 
-.send-button {
+.landing-register-now {
+    margin-left: 10px;
+    padding: 15px 25px;
     background-color: rgba(87, 216, 194);
     color: white;
-    padding: 20px 20px;
     border: none;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 20pt;
+}
+
+.landing-register-now:hover {
+    filter: brightness(0.8);
+}
+
+.landing-register-now-button:active {
+    filter: brightness(0.6);
 }
 
 .fade-in-section {

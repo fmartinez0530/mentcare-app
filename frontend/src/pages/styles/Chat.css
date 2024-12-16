@@ -149,14 +149,23 @@ body {
     max-width: 50%;
     padding: 15px;
     background-color: #d1ffd1;
-    border-radius: 10px;
+    border-radius: 20px;
     position: relative;
     word-wrap: break-word;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .chat-bubble.user {
     align-self: flex-end;
     background-color: #d1ffd1;
+    border-bottom-right-radius: 0;
+    border: 1px solid #add3ad;
+}
+
+.chat-bubble.therapist {
+    background-color: #d1e7ff;
+    border-top-left-radius: 0;
+    border: 1px solid #abbdd1;
 }
 
 .chat-input-container {

@@ -17,7 +17,9 @@ function Payment() {
     const notifySuccess = () => {
         toast.success('Payment Successful! Redirecting to dashboard.');
     };
-    const notifyFail = () => toast("Payment Failed!");
+    const notifyFail = () => {
+        toast("Payment Failed!");
+    }
 
     const [formInput, setFormInput] = useState({
         patientId: '',

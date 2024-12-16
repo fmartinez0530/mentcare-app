@@ -3,7 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* gap: 50px; */
+    gap: 40px;
+    font-family: "Lucida Console", "Courier New", monospace;
 }
 
 .patient-card {
@@ -95,6 +96,7 @@ h3 {
     display: flex;
     flex-direction: row;
     gap: 20px;
+    text-align: left;
 }
 
 .card-buttons {
@@ -105,8 +107,9 @@ h3 {
     color: white;
     width: 80%;
 
-    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    font-size: 12pt;
+    /* font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; */
+    font-weight: bold;
+    font-size: 13pt;
 }
 
 .card-buttons:hover {
@@ -130,6 +133,8 @@ h3 {
 
 .pd-question-container {
     padding: 10px;
+    margin-bottom: 10px;
+    gap: 5px;
 }
 
 .pd-question-container>label {
@@ -141,4 +146,16 @@ h3 {
     border-radius: 5px;
     border: none;
     font-size: 14pt;
+    height: 60px;
+}
+
+.view-therap-profile-btn {
+    padding: 10px 15px;
+    background-color: rgb(52, 196, 169);
+    border: medium;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
 }

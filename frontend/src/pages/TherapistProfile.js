@@ -107,6 +107,7 @@ function TherapistProfile() {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 setCurrentTherapist(data.isCurrentTherapist);
                 setAbleToSwap(data.swapable);
             })
@@ -386,8 +387,8 @@ function TherapistProfile() {
                             <button className={(localStorage.getItem("userType") === "Therapist" && editing === 1) ? "td-btn" : "hidden"} onClick={(event) => cancelEditing(event)}>Cancel Editing</button>
                         </div>
 
-                        <button className={((localStorage.getItem("userType") === "Patient") && (accepting || currentTherapist)) ? "td-btn" : "hidden"} onClick={(event) => addRemTherapist(event)}>{(currentTherapist) ? "Remove" : "Add"} Therapist</button>
-                        <p className={((localStorage.getItem("userType") === "Patient") && !accepting) ? "td-btn-no-hover flex-centered" : "hidden"}>Therapist is not accepting patients</p>
+                        <button className={((localStorage.getItem("userType") === "Patient") && (accepting && ableToSwap)) ? "td-btn" : "hidden"} onClick={(event) => addRemTherapist(event)}>{(currentTherapist) ? "Remove" : "Add"} Therapist</button>
+                        <p className={((localStorage.getItem("userType") === "Patient") && !accepting && !currentTherapist) ? "td-btn-no-hover flex-centered" : "hidden"}>Therapist is not accepting patients</p>
 
                         <div className='flex-col flex-centered' style={{ gap: '60px' }}>
                             <div className="flex-centered flex-col" style={{ gap: '20px' }}>

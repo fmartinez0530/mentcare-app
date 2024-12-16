@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import "./styles/Chat.css";
 import BasicModalInvoice from "../components/InvoiceModal";
 import { io } from 'socket.io-client';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function Chat() {
     const userType = localStorage.getItem('userType');
@@ -14,8 +18,19 @@ function Chat() {
     const [input, setInput] = useState("");
     const chatBoxRef = useRef(null);
 
+    const socketRef = useRef(null);
+
     useEffect(() => {
+        AOS.init({ duration: 1500 });
+    }, [])
+
+    useEffect(() => {
+        if (socketRef.current) {
+            socketRef.current.disconnect();
+            socketRef.current = null;
+        }
         const socket = io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']})
+        socketRef.current = socket;
 
         const fetchChats = async () => {
             const response = await fetch("https://mentcare-backend.onrender.com/userChats", {
@@ -32,9 +47,8 @@ function Chat() {
 
         //  Connection
         socket.on('connect', () => {
-            console.log('Connected to server');
+            console.log(`Connected to Chats server (userID = ${realUserID})`);
             console.log("CHOOSE ID: ", chooseId);
-            console.log("realU ID: ", realUserID);
             socket.emit("init-socket-comm", { "userID": realUserID });
         });
         //  Disconnect
@@ -336,7 +350,15 @@ function Chat() {
 
     return (
         <div className="chat-page">
-            <div className="main-container">
+            <ToastContainer
+                limit={1}
+                position="bottom-left"
+                closeButton={false}
+                hideProgressBar={true}
+                pauseOnHover={false}
+                autoClose={3000}
+            />
+            <div data-aos='fade-up' className="main-container">
                 <div className="sidebar">
                     <div className="chat-list">
                         {therapists.map((therapist) => {
@@ -392,7 +414,7 @@ function Chat() {
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={handleKeyDown}
                             /> : <div className="chat-input inactive">This chat is inactive</div>}
-                            {(selectedTherapist?.chatStatus === 'Active') ? <button className="send-button" onClick={handleSendMessage}>Send</button> :
+                            {(selectedTherapist?.chatStatus === 'Active') ? <button className="send-button" onClick={() => handleSendMessage()}>Send</button> :
                                 <button className="send-button inactive">Send</button>}
                         </div>
                     )}

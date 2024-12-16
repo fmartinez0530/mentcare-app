@@ -92,7 +92,7 @@ function Login() {
                     <input className='loginBtn' type='submit' value={'LOG IN'} onClick={(e) => checkLogin(e)}></input>
                     <div className='flex-row flex-centered redirect-register'>
                         New to MentCare?&nbsp;
-                        <Link to={'/register'}>Register Now</Link>
+                        <Link to={'/register'} className='clickable-register'>Register Now</Link>
                     </div>
                 </div>
             </form>
