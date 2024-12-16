@@ -18,8 +18,6 @@ app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD', '')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DATABASE', 'mentcare')
 
 
-app.config['MYSQL_DB'] = 'my_test_db'
-
 mysql = MySQL(app)
 
 # Initialize Swagger
