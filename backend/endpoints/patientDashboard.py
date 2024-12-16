@@ -11,6 +11,45 @@ import app
 
 PatientDashboardData = Blueprint('PatientDashboardData', __name__)
 
+@PatientDashboardData.route("/getCurrentTherapist", methods=['POST'])
+def getCurrentTherapistFunc():
+    try:
+        patientID = request.json.get('patientID')
+        cursor = mysql.connection.cursor()
+        cursor.execute('''
+                SELECT mainTherapistID FROM patients WHERE patientID = %s
+                ''', (patientID, ))
+        therapistID = cursor.fetchone()[0]
+        if therapistID:
+            cursor.execute('''
+                SELECT users.userID, users.userName, users.profileImg, therapists.therapistID
+                FROM therapists
+                INNER JOIN users ON therapists.userID = users.userID
+                WHERE therapists.therapistID = %s            
+            ''', (therapistID, ))
+            data = cursor.fetchall()
+            columns = [column[0] for column in cursor.description]
+            results = [dict(zip(columns, row)) for row in data]
+
+            response = jsonify(results)
+            response.status_code = 200
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
+        else:
+            response = jsonify({"message":"no main therapist found"})
+            response.status_code = 404
+            response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            return response
+
+    except Exception as err:
+        return {"error":  f"{err}"}
+
 @PatientDashboardData.route("/getJournals", methods=['POST'])
 def getJournalsFunc():
     """
@@ -135,6 +174,7 @@ def getDailySurveysFunc():
                 SELECT
                     ds.dailySurveyID,
                     ds.dateCreated,
+                    cds.completionID,
                     IFNULL(cds.weight, NULL) AS weight,
                     IFNULL(cds.height, NULL) AS height,
                     IFNULL(cds.calories, NULL) AS calories,
@@ -219,7 +259,7 @@ def getCompleteTherapistSurveysFunc():
                     INNER JOIN patients ON completedSurveys.patientID = patients.patientID
                     INNER JOIN therapists ON completedSurveys.therapistID = therapists.therapistID
                     INNER JOIN users ON therapists.userID = users.userID
-                    WHERE completedSurveys.patientID = %s AND completedSurveys.therapistID = patients.mainTherapistID;
+                    WHERE completedSurveys.patientID = %s;
                     ''', (patientID, ))
         comp_surveys_data = cursor.fetchall()
         if comp_surveys_data:
@@ -439,7 +479,7 @@ def sendTherapistSurveyFunc():
         surveyID = request.json.get('surveyID')
 
         questions = request.json.get('questions')
-        surveyQuestions= json.dumps({"survey": questions})
+        surveyQuestions = json.dumps({"survey": questions}, ensure_ascii=False)
         answers = request.json.get('answers')
         surveyAnswers = json.dumps({"answers" : answers})
         currentDate = datetime.now()

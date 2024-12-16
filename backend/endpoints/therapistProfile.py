@@ -475,6 +475,14 @@ def addRemTheraFunc():
                     INSERT INTO therapistPatientsList (therapistID, patientID, status, chatStatus, requestStatus)
                     VALUES ({therapistID}, {userID}, 'Active', 'Inactive', 'Inactive')
                 """)
+            else:
+                # TODO: update so if you re-add an old therapist, status becomes active
+                cursor.execute(f"""
+                    UPDATE therapistPatientsList
+                    SET status = 'Active'
+                    WHERE patientID = {userID} AND therapistID = {therapistID}
+                """)
+
 
             cursor.execute(f'''
                 INSERT INTO notifications(userID, message, redirectLocation)
@@ -490,15 +498,6 @@ def addRemTheraFunc():
         """)
         hasThera = cursor.fetchone()[0]
         cursor.close()
-
-        if(False):
-            cursor.execute(f"SELECT userID FROM therapists WHERE therapists.therapistID = {mainTherapistID}")
-            theraUserID = cursor.fetchone()[0]
-            cursor.execute(f'''
-                INSERT INTO notifications(userID, message)
-                VALUES ({theraUserID}, "Patient {patientName} has left Mentcare.")''')
-            if str(theraUserID) in app.socketsNavbar:
-                app.socketio.emit("update-navbar", room=app.socketsNavbar[str(theraUserID)])
 
         response = jsonify({"nowHasTherapist": hasThera })
         response.status_code = 200

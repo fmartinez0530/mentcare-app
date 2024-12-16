@@ -94,7 +94,7 @@ def get_testimonials():
             SELECT testimonials.testimonialID, testimonials.content, users.profileImg, users.userName
             FROM testimonials
             INNER JOIN users ON users.userID = testimonials.userID
-            ORDER BY RAND() LIMIT 5;
+            ORDER BY testimonialID DESC LIMIT 5;
         """)
         testimonials = cursor.fetchall()
         cursor.close()

@@ -1,11 +1,7 @@
-from flask import request, jsonify, json, Blueprint #,render_template, request
-from app import mysql, socketio, app
-from flask import Flask, request, jsonify, json #,render_template, request
-from flask_mysqldb import MySQL
-from flask_cors import CORS, cross_origin
-from flask_socketio import SocketIO, join_room, leave_room, send, emit
-from datetime import datetime
+from flask import request, jsonify, json, Blueprint
+from app import mysql
 import app
+from datetime import datetime
 #app = Flask(__name__)
 # If you need socketio stuff maybe uncomment the below line.
 # from flask_socketio import SocketIO, join_room, leave_room, send, emit
@@ -113,7 +109,7 @@ def set_chat_status():
 
         mysql.connection.commit()
         cursor.close()
-        response = jsonify({"message": "Success"}), 200
+        response = jsonify({"message": "Success"})
         response.status_code = 200
         response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
@@ -508,6 +504,9 @@ def send_message():
         print(sender)
         print(message)
         print(patient_id)
+        print(f"Current app.sockets before emit: {app.sockets}")
+        print(f"Looking for userID: {userID}")
+
         if str(userID) in app.sockets:
             room = app.sockets[str(userID)]
             print(room)
