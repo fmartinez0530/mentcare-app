@@ -140,7 +140,7 @@ jobs:
           git add backend/endpoints backend/app.py requirements.txt
           # Commit changes if there are any
           if git diff --cached --quiet; then
-            echo "No changes to commit in frontend branch."
+            echo "No changes to commit in backend branch."
           else
             git commit -m "Push to backend branch"
           fi
