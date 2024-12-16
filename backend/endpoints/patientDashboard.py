@@ -626,7 +626,7 @@ def sendDailySurveyFunc():
     except Exception as err:
         return jsonify({"error": str(err)}), 500
 
-@PatientDashboardData.route('/checkInsurance', method=['POST'])
+@PatientDashboardData.route('/checkInsurance', methods=['POST'])
 def checkInsFunc():
     try:
         patientID = request.json.get('patientID')
@@ -640,7 +640,7 @@ def checkInsFunc():
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
-@PatientDashboardData.route('/payInvoiceInsurance', method=['POST'])
+@PatientDashboardData.route('/payInvoiceInsurance', methods=['POST'])
 def checkInsFunc():
     try:
         invoiceID = request.json.get('invoiceID')
