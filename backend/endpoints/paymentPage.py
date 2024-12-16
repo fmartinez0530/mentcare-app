@@ -178,8 +178,8 @@ def submit_payment():
         print(alreadyIn)
 
         cursor = mysql.connection.cursor()
-        cursor.execute('''INSERT INTO payments (patientID, amount, datePaid, cardNum, cvc, expDate, firstName, lastName, city, billingAddress, state, country, zip, phone) VALUES
-                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (patient_id, amount, date_paid, card_num, cvc, exp_date, first_name, last_name, city, billing_address, state, country, zip, phone))
+        # cursor.execute('''INSERT INTO payments (patientID, amount, datePaid, cardNum, cvc, expDate, firstName, lastName, city, billingAddress, state, country, zip, phone) VALUES
+        #                 (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (patient_id, amount, date_paid, card_num, cvc, exp_date, first_name, last_name, city, billing_address, state, country, zip, phone))
 
         if (check == True and alreadyIn == False):
             print("Got through")
@@ -195,7 +195,7 @@ def submit_payment():
             cursor.execute('''UPDATE details SET 
                 cardNum = %s, cvc = %s, expDate = %s, firstName = %s, 
                 lastName = %s, city = %s, billingAddress = %s, state = %s, 
-                country = %s, zip = %s, phone = %s WHERE patientID = %s;''', 
+                country = %s, zip = %s, phone = %s WHERE patientID = %s''', 
                 (card_num, cvc, exp_date, first_name, last_name, city, billing_address, state, country, zip, phone, patient_id,))
 
         print("got through")
