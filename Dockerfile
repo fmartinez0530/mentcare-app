@@ -1,6 +1,13 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
+# Install system dependencies for mysqlclient and pkg-config
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libmysqlclient-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set the working directory in the container
 WORKDIR /app
 
