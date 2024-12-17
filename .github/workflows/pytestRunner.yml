@@ -86,7 +86,7 @@ jobs:
       - name: Docker logs
         run: |
           docker logs mysql-container
-          docker logs flask-backend
+          docker logs backend-container
 
       - name: Run Selenium Tests
         env:
