@@ -89,7 +89,7 @@ try:
             for submit_button in submit_buttons:
                 if submit_button.is_displayed() and submit_button.is_enabled():
                     print("SUBMIT button found, clicking to submit the survey.")
-                    driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
+                    #driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
                     submit_button.click()
                     print("Survey submitted successfully. Exiting program.")
                     breakLoop = True
