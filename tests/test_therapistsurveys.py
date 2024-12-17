@@ -12,7 +12,7 @@ options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--headless")
 options.add_argument('--disable-gpu')
 
-service = Service("./chromedriver-win64/chromedriver.exe")
+service = Service("./chrome-linux64")
 driver = webdriver.Chrome(service=service)
 # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
