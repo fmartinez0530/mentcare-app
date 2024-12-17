@@ -59,7 +59,7 @@ jobs:
           -d mysql:8.0
       - name: Verify dump.sql
         run: |
-          docker exec -i mysql-docker mysql -u root -proot_password -e "SELECT * FROM users LIMIT 1;" my_test_db
+          docker exec -i mysql-container mysql -u root -proot_password -e "SELECT * FROM users LIMIT 1;" my_test_db
 
       - name: Run the Frontend
         run: |
