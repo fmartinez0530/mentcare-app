@@ -77,7 +77,7 @@ jobs:
 
       - name: Build and start backend container
         run: |
-          docker bild -t flask-backend .
+          docker build -t flask-backend .
           docker run --name backend-container --network my-network -p 5000:5000 -d flask-backend
           cd ../
       - name: Wait for services to start
