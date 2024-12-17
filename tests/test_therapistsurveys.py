@@ -70,6 +70,7 @@ try:
             break
 
     while True:
+        breakLoop = False
         question_textareas = wait.until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".pd-question-container textarea"))
         )
@@ -81,14 +82,20 @@ try:
                 time.sleep(1)
 
         try:
-            submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
-            if submit_button.is_displayed() and submit_button.is_enabled():
-                print("SUBMIT button found, clicking to submit the survey.")
-                driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
-                submit_button.click()
-                print("Survey submitted successfully. Exiting program.")
-                assert True
-                break 
+            # submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
+            submit_buttons = wait.until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".pd-action-btn[type='submit']"))
+            )
+            for submit_button in submit_buttons:
+                if submit_button.is_displayed() and submit_button.is_enabled():
+                    print("SUBMIT button found, clicking to submit the survey.")
+                    driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
+                    submit_button.click()
+                    print("Survey submitted successfully. Exiting program.")
+                    breakLoop = True
+                    break 
+            if breakLoop:
+                break
         except Exception:
             print("No SUBMIT button found. Checking for NEXT button.")
 
