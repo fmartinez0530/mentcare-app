@@ -57,6 +57,12 @@ jobs:
           -e MYSQL_PASSWORD=password \
           -v $(pwd)/dump.sql:/docker-entrypoint-initdb.d/dump.sql \
           -d mysql:8.0
+      - name: Wait for MySQL to be ready
+        run: |
+          sleep 10
+      - name: Check MySQL container logs
+        run: |
+          docker logs mysql-container
       - name: Verify dump.sql
         run: |
           docker exec -i mysql-container mysql -u root -proot_password -h 127.0.0.1 -e "SELECT * FROM users LIMIT 1;" my_test_db
