@@ -6,11 +6,11 @@ from selenium.webdriver.chrome.service import Service
 # from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-# options = webdriver.ChromeOptions()
-# options.add_argument("--no-sandbox")
-# options.add_argument("--disable-dev-shm-usage")
-# options.add_argument("--headless")
-# options.add_argument('--disable-gpu')
+options = webdriver.ChromeOptions()
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--headless")
+options.add_argument('--disable-gpu')
 
 service = Service("./chromedriver-win64/chromedriver.exe")
 driver = webdriver.Chrome(service=service)
