@@ -4,7 +4,7 @@ FROM python:3.9-slim
 # Install system dependencies for mysqlclient and pkg-config
 RUN apt-get update && apt-get install -y \
     build-essential \
-    libmysqlclient-dev \
+    libmariadb-dev \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
