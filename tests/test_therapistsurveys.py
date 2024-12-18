@@ -96,9 +96,10 @@ try:
                     break 
             if breakLoop:
                 break
-        except Exception:
+        except Exception as e:
             breakLoop = True
-            print("No SUBMIT button found. Checking for NEXT button.")
+            print(f"Error occurred: {e}")
+            #print("No SUBMIT button found. Checking for NEXT button.")
 
         if breakLoop == False:
             try:
