@@ -633,7 +633,7 @@ def checkInsFunc():
         cursor = mysql.connection.cursor()
         cursor.execute("SELECT insuranceCompany, insuranceID, insuranceTier FROM patients WHERE patientID = %s", (patientID, ))
         data = cursor.fetchone()
-        if data:
+        if data[0] is None or data[1] is None or data[2] is None:
            return jsonify({'message' : 'success'}), 200
         else:
             return jsonify({'message' : 'success'}), 404
