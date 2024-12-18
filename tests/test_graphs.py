@@ -54,18 +54,18 @@ try:
     for button in metric_buttons:
         ActionChains(driver).move_to_element(button).click().perform()
         print(f"Clicked on metric: {button.text}")
-        time.sleep(1) 
+        time.sleep(0.5) 
 
     graphs = driver.find_elements(By.CLASS_NAME, "scatterlayer")
     print("All graphs displayed successfully!")
     time.sleep(3)
 
     dropdown_trigger = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "navbar-profile-pic-container")))
-    time.sleep(1)
+    time.sleep(0.5)
 
     actions = ActionChains(driver)
     actions.move_to_element(dropdown_trigger).perform()
-    time.sleep(1)
+    time.sleep(0.5)
 
     logout_button = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Log Out")))
 
@@ -110,7 +110,7 @@ try:
     for button in metric_buttons:
         ActionChains(driver).move_to_element(button).click().perform()
         print(f"Clicked on metric: {button.text}")
-        time.sleep(1) 
+        time.sleep(0.5) 
 
     graphs = driver.find_elements(By.CLASS_NAME, "scatterlayer")
     print("All graphs displayed successfully!")

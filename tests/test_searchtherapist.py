@@ -33,20 +33,20 @@ try:
 
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
     email_input.send_keys("john.smith@example.com")
-    time.sleep(1)
+    time.sleep(0.5)
     
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
-    time.sleep(1)
+    time.sleep(0.5)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
     login_button.click()
     wait.until(EC.url_contains("/dashboard"))
     print("Login successful, now on the dashboard.")
-    time.sleep(1) 
+    time.sleep(0.5) 
 
     driver.get("http://localhost:3000/therapistlist") 
-    time.sleep(1)
+    time.sleep(0.5)
 
     gender_btn_1 = driver.find_element(By.XPATH, "//label[text()='Female']")
     gender_btn_1.click()
@@ -63,15 +63,15 @@ try:
     gender_btn_1.click()
     gender_btn_2.click()
     gender_btn_3.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     dropdown = wait.until(EC.presence_of_element_located((By.ID, "sort-dropdown")))
     dropdown.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     first_option = wait.until(EC.presence_of_element_located((By.XPATH, "//select[@id='sort-dropdown']/option[2]")))
     first_option.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     search_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "search-therapists-input")))
     search_input.send_keys("Linda")
@@ -84,14 +84,14 @@ try:
             visible_button = button
             break
     visible_button.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     wait.until(EC.url_contains("/therapistProfile"))
     time.sleep(3)
 
     actions = ActionChains(driver)
     actions.send_keys(Keys.TAB).send_keys(Keys.ENTER).perform()
-    time.sleep(1)
+    time.sleep(0.5)
 
     driver.get("http://localhost:3000/dashboard")
     wait.until(EC.url_contains("/dashboard"))
@@ -112,14 +112,14 @@ try:
             visible_button = button
             break
     visible_button.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     wait.until(EC.url_contains("/therapistProfile"))
     time.sleep(3)
 
 
     actions.send_keys(Keys.TAB).send_keys(Keys.ENTER).perform()
-    time.sleep(1)
+    time.sleep(0.5)
 
     driver.get("http://localhost:3000/dashboard")
     wait.until(EC.url_contains("/dashboard"))

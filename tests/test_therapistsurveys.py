@@ -44,19 +44,19 @@ try:
     driver.execute_script(script)
 
     wait = WebDriverWait(driver, 45)
-    time.sleep(1)
+    time.sleep(0.5)
 
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
     email_input.send_keys("john.smith@example.com")
     element_class = email_input.get_attribute("class")
     print("Class of the element:", element_class)
-    time.sleep(1)
+    time.sleep(0.5)
     
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
     element_class = password_input.get_attribute("class")
     print("Class of the element:", element_class)
-    time.sleep(1)
+    time.sleep(0.5)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
     element_class = login_button.get_attribute("class")
@@ -91,7 +91,7 @@ try:
                 question.clear()
                 question.send_keys(f"Sample answer {idx + 1}")
                 print(f"Answered question {idx + 1} with 'Sample answer {idx + 1}'.")
-                time.sleep(1)
+                time.sleep(0.5)
 
         try:
             submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
@@ -116,6 +116,7 @@ try:
         except Exception:
             print("No NEXT button or SUBMIT button found. Exiting.")
             break
+    time.sleep(4)
 
 finally:
     try:

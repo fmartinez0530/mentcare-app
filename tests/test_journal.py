@@ -62,7 +62,7 @@ try:
     new_content = "This is a test journal entry."
     journal_textarea.clear()
     journal_textarea.send_keys(new_content)
-    time.sleep(1)
+    time.sleep(0.5)
 
     print("Saving the journal...")
     save_button = driver.find_element(By.XPATH, "//input[@value='SAVE']")
@@ -72,12 +72,12 @@ try:
     print("Closing the journal...")
     close_button = driver.find_element(By.XPATH, "//input[@value='CLOSE']")
     close_button.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     print("Reopening the journal to verify saved content...")
     journal_button = driver.find_element(By.XPATH, "//input[contains(@class, 'card-buttons') and contains(@value, 'Journal')]")
     journal_button.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     print("Verifying the saved journal content...")
     reopened_textarea = driver.find_element(By.XPATH, "//textarea[@placeholder='Type here...']")

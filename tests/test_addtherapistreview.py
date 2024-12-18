@@ -33,20 +33,20 @@ try:
 
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
     email_input.send_keys("john.smith@example.com")
-    time.sleep(1)
+    time.sleep(0.5)
     
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
-    time.sleep(1)
+    time.sleep(0.5)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
     login_button.click()
     wait.until(EC.url_contains("/dashboard"))
     print("Login successful, now on the dashboard.")
-    time.sleep(1) 
+    time.sleep(0.5) 
 
     driver.get("http://localhost:3000/therapistlist") 
-    time.sleep(1)
+    time.sleep(0.5)
 
     search_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "search-therapists-input")))
     search_input.send_keys("Linda White")
@@ -59,7 +59,7 @@ try:
             visible_button = button
             break
     visible_button.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     wait.until(EC.url_contains("/therapistProfile"))
     time.sleep(3)
@@ -80,14 +80,14 @@ try:
 
     textarea = driver.find_element(By.CSS_SELECTOR, "div.popUp-background textarea")
     textarea.send_keys("Linda White is a great therapist!")
-    time.sleep(1)
+    time.sleep(0.5)
 
     textarea.send_keys(Keys.TAB + (Keys.ARROW_RIGHT * 5))
-    time.sleep(1)
+    time.sleep(0.5)
 
     # star_input = driver.find_element(By.XPATH, "(//div[@class='popUp']//form//div//spam//label)")
     # star_input.click()
-    # time.sleep(1)
+    # time.sleep(0.5)
 
     send_review_button = driver.find_element(By.XPATH, "//input[@type='submit' and @value='Send Review']")
     send_review_button.click()
@@ -97,7 +97,7 @@ try:
 
     search_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "search-therapists-input")))
     search_input.send_keys("Linda White")
-    time.sleep(1)
+    time.sleep(0.5)
 
     buttons = driver.find_elements(By.XPATH, "//button[text()='View Profile']")
     visible_button = None
@@ -106,7 +106,7 @@ try:
             visible_button = button
             break
     visible_button.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     wait.until(EC.url_contains("/therapistProfile"))
     time.sleep(3)

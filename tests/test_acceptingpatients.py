@@ -38,11 +38,11 @@ try:
 
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
     email_input.send_keys("linda.white@example.com")
-    time.sleep(1)
+    time.sleep(0.5)
     
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
-    time.sleep(1)
+    time.sleep(0.5)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
     login_button.click()

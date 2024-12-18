@@ -42,7 +42,7 @@ try:
 
     time.sleep(3) 
     dropdown_trigger = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "navbar-profile-pic-container")))
-    time.sleep(1)
+    time.sleep(0.5)
 
     actions = ActionChains(driver)
     actions.move_to_element(dropdown_trigger).perform()
@@ -50,7 +50,7 @@ try:
 
     settings_button = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Settings")))
     settings_button.click()
-    time.sleep(1)
+    time.sleep(0.5)
 
     wait.until(EC.url_contains("/settings"))
     time.sleep(3)
@@ -71,15 +71,15 @@ try:
     time.sleep(3)
 
     driver.get("http://localhost:3000/login")
-    time.sleep(1)
+    time.sleep(0.5)
 
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
-    email_input.send_keys("john.smith@example.com")
-    time.sleep(1)
+    email_input.send_keys("emily.jones@example.com")
+    time.sleep(0.5)
     
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
-    time.sleep(1)
+    time.sleep(0.5)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
     login_button.click()
