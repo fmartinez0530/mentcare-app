@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_AkulCoder_mentcare_app_1734306656164-push-trigger-input-set
+  identifier: Build_AkulCoder_mentcare_app_1734306656164pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_AkulCoder_mentcare_app_1734306656164
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>

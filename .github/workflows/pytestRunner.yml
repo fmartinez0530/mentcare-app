@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -40,60 +40,72 @@ jobs:
           pip install webdriver-manager  # Install webdriver-manager to handle the ChromeDriver
       - name: Run Pytest
         run: python -m pytest --ignore=./tests
-      # - name: Install Chromium and ChromeDriver
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y chromium-browser chromium-chromedriver
-          
-      # - name: Set up MySQL and Backend on Same Network
-      #   run: |
-      #     # Create a Docker network to allow containers to communicate
-      #     docker network create my-network
-          
-      #     # Start MySQL container and attach to the custom network
-      #     docker run --network my-network --name mysql-docker -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root_password -e MYSQL_DATABASE=my_test_db -d mysql:8.0
-      #     sleep 30
+      - name: Install Chromium and ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+      - name: Create Docker Network
+        run: |
+          docker network create my-network
+      - name: Start MySQL Container
+        run: |
+          docker run --name mysql-container \
+          --network my-network \
+          -e MYSQL_ROOT_PASSWORD=root_password \
+          -e MYSQL_DATABASE=my_test_db \
+          -e MYSQL_USER=user \
+          -e MYSQL_PASSWORD=password \
+          -v $(pwd)/dump.sql:/docker-entrypoint-initdb.d/dump.sql \
+          -d mysql:8.0
+      - name: Wait for MySQL to be ready
+        run: |
+          sleep 10
+      - name: Check MySQL container logs
+        run: |
+          docker logs mysql-container
+      - name: Verify dump.sql
+        run: |
+          docker exec -i mysql-container mysql -u root -proot_password -h 127.0.0.1 -e "SELECT * FROM users LIMIT 1;" my_test_db
 
-      #     # Check if MySQL is running
-      #     docker exec mysql-docker mysqladmin -u root -proot_password ping
-          
-      #     # Copy dump.sql into MySQL container and load it
-      #     docker cp ./dump.sql mysql-docker:/tmp/dump.sql
-      #     docker exec -i mysql-docker mysql -u root -proot_password my_test_db < ./dump.sql
-          
-      #     # Verify the dump was loaded correctly
-      #     docker exec -i mysql-docker mysql -u root -proot_password -e "SELECT * FROM users LIMIT 1;" my_test_db
+      - name: Run the Frontend
+        run: |
+          cd ./frontend
+          yarn install  # Ensure all dependencies are installed
+          chmod +x ./node_modules/.bin/react-scripts
+          yarn start &
+          cd ../
 
-      # - name: Run the Frontend
-      #   run: |
-      #     cd ./frontend
-      #     yarn install  # Ensure all dependencies are installed
-      #     chmod +x ./node_modules/.bin/react-scripts
-      #     yarn start &
-      #     cd ../
+      - name: Build and start backend container
+        run: |
+          docker build -t flask-backend .
+          docker run --name backend-container --network my-network -p 5000:5000 -d flask-backend
+          cd ../
+      - name: Wait for services to start
+        run: sleep 30
 
-      # - name: Run the Backend
-      #   run: |
-      #     # cd ./backend
-      #     # # Run Flask backend with --host=0.0.0.0 to make it available on all interfaces
-      #     # flask run --host=0.0.0.0 --port=5000 &
-      #     # cd ../
-          
-      #     # # Sleep to ensure backend is running before starting tests
-      #     # sleep 60
-      #     cd ./backend
-      #     docker build -t flask-backend .  # Build the Docker image for Flask
-      #     docker run --name flask-backend-container --network my-network -p 5000:5000 flask-backend & 
-      #     cd ../
-          
-      #     # Sleep to ensure backend is running before starting tests
-      #     sleep 60
+      - name: Docker logs
+        run: |
+          docker logs mysql-container
+          docker logs backend-container
 
-      # - name: Run Selenium Tests
-      #   run: |
-      #     curl -X POST http://localhost:5000/endpointOne -d '{}' -H "Content-Type: application/json"
-      #     curl http://localhost:5000/endpointTwo
-      #     python test_therapistsurveys.py
+      - name: Run Selenium Tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          curl -X POST http://localhost:5000/endpointOne -d '{}' -H "Content-Type: application/json"
+          curl http://localhost:5000/endpointTwo
+          cd ./tests
+          python test_login.py
+          python test_registerpatient.py
+          python test_registertherapist.py
+          python test_dailysurveys.py
+          python test_graphs.py
+          python test_journal.py
+          python test_payment.py
+          python test_testimonial.py
+          
+          # python test_acceptingpatients.py
+          # python test_therapistsurveys.py
 
       - name: Push changes to main branch
         if: github.ref == 'refs/heads/dev' && success()
