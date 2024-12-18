@@ -188,7 +188,7 @@ def getDailySurveysFunc():
                     ON ds.dailySurveyID = cds.dailySurveyID AND cds.patientID = %s
                 WHERE (DATE(ds.dateCreated) = CURDATE())
                     OR (cds.dailySurveyID IS NOT NULL)
-                ''', (patientID, patientID))
+                ''', (patientID, ))
         daily_survey_data = cursor.fetchall()
         if daily_survey_data:
             daily_survey_columns = [column[0] for column in cursor.description]
