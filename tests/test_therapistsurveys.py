@@ -83,19 +83,23 @@ try:
 
         try:
             # submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
-            submit_buttons = wait.until(
-                EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".pd-action-btn[type='submit']"))
-            )
-            for submit_button in submit_buttons:
-                if submit_button.is_displayed() and submit_button.is_enabled():
-                    print("SUBMIT button found, clicking to submit the survey.")
-                    #driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
-                    submit_button.click()
-                    print("Survey submitted successfully. Exiting program.")
-                    breakLoop = True
-                    break 
-            if breakLoop:
-                break
+            #submit_buttons = wait.until(
+            #    EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".pd-action-btn[type='submit']"))
+            #)
+            #for submit_button in submit_buttons:
+            #    if submit_button.is_displayed() and submit_button.is_enabled():
+            #        print("SUBMIT button found, clicking to submit the survey.")
+            #        #driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
+            #        submit_button.click()
+            #        print("Survey submitted successfully. Exiting program.")
+            #        breakLoop = True
+            #        break 
+            #if breakLoop:
+            #    break
+            submit_button = driver.find_element(By.XPATH, "//form[@incomptherapistsurveyid]//input[@type='submit']")
+            submit_button.click()
+            print("Survey submitted successfully. Exiting program.")
+            break
         except Exception as e:
             breakLoop = True
             print(f"Error occurred: {e}")
