@@ -97,20 +97,21 @@ try:
             if breakLoop:
                 break
         except Exception:
+            breakLoop = True
             print("No SUBMIT button found. Checking for NEXT button.")
 
-        try:
-            next_button = driver.find_element(By.XPATH, "//button[text()='NEXT']")
-            if next_button.is_displayed() and next_button.is_enabled():
-                print("NEXT button found, clicking to proceed to the next page.")
-                driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
-                next_button.click()
-                time.sleep(2)
-                continue
-        except Exception:
-            print("No NEXT button or SUBMIT button found. Exiting.")
-            break
-
+        if breakLoop == False:
+            try:
+                next_button = driver.find_element(By.XPATH, "//button[text()='NEXT']")
+                if next_button.is_displayed() and next_button.is_enabled():
+                    print("NEXT button found, clicking to proceed to the next page.")
+                    driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
+                    next_button.click()
+                    time.sleep(2)
+                    continue
+            except Exception:
+                print("No NEXT button or SUBMIT button found. Exiting.")
+                break
 finally:
     try:
         driver.quit()
