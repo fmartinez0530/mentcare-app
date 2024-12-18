@@ -82,6 +82,7 @@ jobs:
           # Commit changes if there are any
           if git diff --cached --quiet; then
             echo "No changes to commit in frontend branch."
+            git commit --allow-empty -m "Empty commit to keep frontend branch updated"
           else
             git commit -m "Push to frontend branch"
           fi
@@ -143,6 +144,7 @@ jobs:
           # Commit changes if there are any
           if git diff --cached --quiet; then
             echo "No changes to commit in backend branch."
+            git commit --allow-empty -m "Empty commit to keep backend branch updated"
           else
             git commit -m "Push to backend branch"
           fi
