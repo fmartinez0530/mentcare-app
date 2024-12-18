@@ -45,15 +45,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -U pytest
+          pip install -U pytest pytest-cov
           pip install -e .
-          pip install webdriver-manager  # Install webdriver-manager to handle the ChromeDriver
       - name: Run Pytest
-        run: |
-          cd ./backend/tests
-          coverage run -m pytest & coverage report
-          cd ../../
-        
+        run: python -m pytest --ignore=./tests --cov=. --cov-report=term
       - name: Check if frontend branch exists
         run: |
           git fetch origin
