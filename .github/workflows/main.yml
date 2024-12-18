@@ -1,0 +1,153 @@
+name: Push to Frontend/Backend
+
+on:
+  push:
+    branches:
+      - dev
+permissions:
+  contents: write
+
+jobs:
+  sync-folders:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest] # os: [ubuntu-latest, windows-latest]
+        python-version: ["3.9"] # python-version: ["3.9", "3.10"]
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch the entire history to switch branches
+          
+      - uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "America/New_York"
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+      - name: Set up Git authentication
+        run: |
+          git config --global url."https://${{ secrets.PAT }}@github.com/".insteadOf "https://github.com/"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -U pytest
+          pip install -e .
+          pip install webdriver-manager  # Install webdriver-manager to handle the ChromeDriver
+      - name: Run Pytest
+        run: python -m pytest --ignore=./tests
+        
+      - name: Check if frontend branch exists
+        run: |
+          git fetch origin
+          if git show-ref --verify --quiet refs/remotes/origin/frontend; then
+            echo "Frontend branch exists"
+          else
+            echo "Frontend branch does not exist"
+            exit 1  # Exit the job if the branch doesn't exist
+          fi
+      # Sync to Frontend Branch
+      - name: Checkout frontend branch
+        run: |
+          git fetch origin
+          git checkout -B frontend origin/frontend
+      - name: Checkout specific files from dev branch
+        run: |
+          # Checkout only the specific frontend files from the dev branch
+          git checkout dev -- frontend/public frontend/src frontend/package.json frontend/package-lock.json
+      - name: Replace strings in frontend files
+        run: |
+          # Replace "http://localhost:5000/" with "https://mentcare-backend.onrender.com/" in all frontend files
+          find ./frontend/src -type f -exec sed -i 's/http:\/\/localhost:5000\//https:\/\/mentcare-backend.onrender.com\//g' {} +
+          find ./frontend/src -type f -exec sed -i 's/\"http:\/\/localhost:5000\"/\"https:\/\/mentcare-backend.onrender.com\"/g' {} +
+          find ./frontend/src -type f -exec sed -i 's/http:\/\/127.0.0.1:5000/https:\/\/mentcare-backend.onrender.com/g' {} +
+          find ./frontend/src -type f -exec sed -i 's/http:\/\/localhost:3000/https:\/\/mentcare-frontend.onrender.com/g' {} +
+          find ./frontend/src -type f -exec sed -i "s#io('http://localhost:5000')#io('https://mentcare-backend.onrender.com', {withCredentials:true, transports:['websocket', 'polling']})#g" {} +
+      - name: Stage and commit changes to frontend branch
+        run: |
+          # Stage only the specific frontend files
+          git add frontend/public frontend/src frontend/package.json frontend/package-lock.json
+          # Commit changes if there are any
+          if git diff --cached --quiet; then
+            echo "No changes to commit in frontend branch."
+            git commit --allow-empty -m "Empty commit to keep frontend branch updated"
+          else
+            git commit -m "Push to frontend branch"
+          fi
+      - name: Push changes to frontend branch
+        run: |
+          git push origin frontend
+      # Sync to Backend Branch
+      - name: Switch to backend branch
+        run: |
+          git fetch origin
+          git checkout -B backend origin/backend
+      - name: Copy backend-specific folders from dev branch
+        run: |
+          # Checkout the specific folders from the dev branch
+          git checkout dev -- backend/endpoints backend/app.py requirements.txt
+      - name: Replace first 20 lines of a file with 21 different lines
+        run: |
+          # Define the lines you want to replace the first 20 lines with
+          lines=(
+            "from flask import Flask, request, jsonify, json, send_file #,render_template, request"
+            "from flask_mysqldb import MySQL"
+            "from flask_cors import CORS, cross_origin"
+            "from flask_socketio import SocketIO, join_room, leave_room, send, emit"
+            "from datetime import datetime"
+            "from io import BytesIO"
+            "from flasgger import Swagger"
+            "import os"
+            "app = Flask(__name__)"
+            "frontend_url = os.getenv('FRONTEND_URL', 'https://mentcare-frontend.onrender.com')"
+            "CORS(app, origins='*', methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)"
+            "socketio = SocketIO(app, cors_allowed_origins='*', methods=['GET', 'POST', 'OPTIONS'])"
+            "sockets = {}"
+            "socketsNavbar = {}"
+            "app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'localhost')  # Default to localhost if not set"
+            "app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')"
+            "app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD', '')"
+            "app.config['MYSQL_DB'] = os.getenv('MYSQL_DATABASE', 'mentcare')"
+            ""
+            ""
+          )
+          # Create a temporary file with the 20 lines
+          printf "%s\n" "${lines[@]}" > temp_lines.txt
+          # Replace the first 20 lines of the target file with the new lines
+          # Append the remaining lines after the first 21 lines
+          tail -n +20 backend/app.py >> temp_lines.txt
+          
+          # Move the new content into the original file
+          mv temp_lines.txt backend/app.py
+          
+      - name: Replace strings in backend files
+        run: |
+          # Replace "http://localhost:3000/" with "https://mentcare-frontend.onrender.com/" in all backend files
+          find ./backend -type f -exec sed -i 's/http:\/\/localhost:3000/https:\/\/mentcare-frontend.onrender.com/g' {} +
+          
+      - name: Stage and commit changes to backend branch
+        run: |
+          # Stage the changes
+          git add backend/endpoints backend/app.py requirements.txt
+          # Commit changes if there are any
+          if git diff --cached --quiet; then
+            echo "No changes to commit in backend branch."
+            git commit --allow-empty -m "Empty commit to keep backend branch updated"
+          else
+            git commit -m "Push to backend branch"
+          fi
+      - name: Push changes to backend branch
+        run: |
+          git push origin backend
