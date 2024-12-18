@@ -646,6 +646,7 @@ def payInvoiceInsFunc():
         invoiceID = request.json.get('invoiceID')
         cursor = mysql.connection.cursor()
         cursor.execute('''DELETE FROM invoices WHERE invoiceID = %s;''', (invoiceID,))
+        mysql.connection.commit()
         return jsonify({'message' : 'success'}), 200
     except Exception as err:
         return jsonify({"error": str(err)}), 500
