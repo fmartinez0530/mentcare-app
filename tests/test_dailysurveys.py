@@ -105,6 +105,8 @@ try:
         except Exception:
             print("No NEXT button or SUBMIT button found. Exiting.")
             break
+    
+    time.sleep(3)
 
 finally:
     try:

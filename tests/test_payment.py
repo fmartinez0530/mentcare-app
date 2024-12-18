@@ -130,7 +130,7 @@ try:
     toast_message = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "Toastify__toast--success")))
     assert "Payment Successful" in toast_message.text, f"Unexpected toast message: {toast_message.text}"
     print("Payment test passed!")
-    time.sleep(3)
+    time.sleep(5)
 
 except Exception as e:
     print(f"Test failed: {e}")

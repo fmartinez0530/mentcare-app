@@ -56,7 +56,7 @@ try:
     time.sleep(2)
     acceptance_btn.click()
 
-    time.sleep(2)
+    time.sleep(5)
 
 finally:
     try:

@@ -121,7 +121,7 @@ try:
         driver.execute_script(f"window.scrollTo(0, {current_position});")
         time.sleep(scroll_pause_time)
     
-    time.sleep(3)
+    time.sleep(5)
     
 finally:
     try:
