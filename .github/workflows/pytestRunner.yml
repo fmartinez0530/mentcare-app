@@ -95,7 +95,17 @@ jobs:
           curl -X POST http://localhost:5000/endpointOne -d '{}' -H "Content-Type: application/json"
           curl http://localhost:5000/endpointTwo
           cd ./tests
-          python test_therapistsurveys.py
+          python test_login.py
+          python test_registerpatient.py
+          python test_registertherapist.py
+          python test_dailysurveys.py
+          python test_graphs.py
+          python test_journal.py
+          python test_payment.py
+          python test_testimonial.py
+          
+          # python test_acceptingpatients.py
+          # python test_therapistsurveys.py
 
       - name: Push changes to main branch
         if: github.ref == 'refs/heads/dev' && success()
