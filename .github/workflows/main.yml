@@ -1,9 +1,11 @@
-name: Push to Frontend/Backend
+name: Pipeline
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - dev
+
 permissions:
   contents: write
 
