@@ -473,11 +473,13 @@ def settingsRemAccFunc():
             cursor.execute(f'''
                 DELETE FROM notifications WHERE userID = {realUserId}''')
             cursor.execute(f'''
-                DELETE FROM patients WHERE patientID = {userId}''')
+                DELETE FROM patients WHERE userID = {realUserId}''')
             cursor.execute(f'''
                 DELETE FROM users WHERE userID = {realUserId}''')
+            mysql.connection.commit()
+            print("Got here")
 
-            if(mainTherapistID):
+            if mainTherapistID:
                 cursor.execute(f"SELECT userID FROM therapists WHERE therapists.therapistID = {mainTherapistID}")
                 theraUserID = cursor.fetchone()[0]
                 cursor.execute(f'''
