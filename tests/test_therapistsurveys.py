@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -96,8 +97,10 @@ try:
             #        break 
             #if breakLoop:
             #    break
+            Actions actions = new Actions(driver);
             submit_button = driver.find_element(By.XPATH, "//form[@incomptherapistsurveyid]//input[@type='submit']")
-            submit_button.click()
+            actions.moveToElement(element).click().perform();
+            #submit_button.click()
             print("Survey submitted successfully. Exiting program.")
             break
         except Exception as e:
@@ -117,6 +120,8 @@ try:
             except Exception:
                 print("No NEXT button or SUBMIT button found. Exiting.")
                 break
+        else:
+            break
 finally:
     try:
         driver.quit()
