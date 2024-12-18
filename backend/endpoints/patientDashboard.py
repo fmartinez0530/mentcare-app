@@ -634,9 +634,9 @@ def checkInsFunc():
         cursor.execute("SELECT insuranceCompany, insuranceID, insuranceTier FROM patients WHERE patientID = %s", (patientID, ))
         data = cursor.fetchone()
         if data[0] is None or data[1] is None or data[2] is None:
-           return jsonify({'message' : 'success'}), 200
+           return jsonify({'message' : 'success'}), 404
         else:
-            return jsonify({'message' : 'success'}), 404
+            return jsonify({'message' : 'success'}), 200
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
