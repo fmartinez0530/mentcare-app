@@ -49,7 +49,7 @@ jobs:
           pip install -e .
           pip install webdriver-manager  # Install webdriver-manager to handle the ChromeDriver
       - name: Run Pytest
-        run: python -m pytest --ignore=./tests
+        run: python -m pytest --ignore=./tests & coverage report
         
       - name: Check if frontend branch exists
         run: |
