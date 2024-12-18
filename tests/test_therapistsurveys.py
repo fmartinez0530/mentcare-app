@@ -97,7 +97,8 @@ try:
             #        break 
             #if breakLoop:
             #    break
-            Actions actions = new Actions(driver);
+            actions = ActionChains(driver)
+            actions.move_to_element(dropdown_trigger).perform()
             submit_button = driver.find_element(By.XPATH, "//form[@incomptherapistsurveyid]//input[@type='submit']")
             actions.moveToElement(element).click().perform();
             #submit_button.click()
