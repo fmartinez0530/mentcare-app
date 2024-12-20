@@ -1,24 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 import time
-#    Adding this to make a new commit
-options = webdriver.ChromeOptions()
-# options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-# options.add_argument("--headless")
-options.add_argument('--disable-gpu')
-options.add_argument("--remote-debugging-port=9222")
-options.add_argument("--disable-software-rasterizer")
 
-#service = Service("./chromedriver-linux64/chromedriver")
-#service = Service(ChromeDriverManager().install())
-#driver = webdriver.Chrome(service=service)
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+# options = webdriver.ChromeOptions()
+# options.add_argument("--no-sandbox")
+# options.add_argument("--disable-dev-shm-usage")
+# options.add_argument("--headless")
+# options.add_argument('--disable-gpu')
+
+service = Service("./chromedriver-win64/chromedriver.exe")
+driver = webdriver.Chrome(service=service)
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # driver_path = "E:/CS490/cs490_gp/tests/chromedriver-win64/chromedriver.exe"
 # brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
@@ -30,21 +26,37 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 
 
 try:
+    driver.maximize_window()
     driver.get("http://localhost:3000/login")
+    script = """
+    var testMessage = document.createElement('div');
+    testMessage.innerHTML = "<div>FEATURE: Therapist Survey</div>";
+    testMessage.style.position = "fixed";
+    testMessage.style.bottom = "10px";
+    testMessage.style.left = "10px";
+    testMessage.style.backgroundColor = "yellow";
+    testMessage.style.color = "black";
+    testMessage.style.zIndex = "9999";
+    testMessage.style.padding = "10px";
+    testMessage.style.fontSize = "16pt";
+    document.body.appendChild(testMessage);
+    """
+    driver.execute_script(script)
+
     wait = WebDriverWait(driver, 45)
-    time.sleep(1)
+    time.sleep(0.5)
 
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
     email_input.send_keys("john.smith@example.com")
     element_class = email_input.get_attribute("class")
     print("Class of the element:", element_class)
-    time.sleep(1)
+    time.sleep(0.5)
     
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
     element_class = password_input.get_attribute("class")
     print("Class of the element:", element_class)
-    time.sleep(1)
+    time.sleep(0.5)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
     element_class = login_button.get_attribute("class")
@@ -71,7 +83,6 @@ try:
             break
 
     while True:
-        breakLoop = False
         question_textareas = wait.until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".pd-question-container textarea"))
         )
@@ -80,50 +91,33 @@ try:
                 question.clear()
                 question.send_keys(f"Sample answer {idx + 1}")
                 print(f"Answered question {idx + 1} with 'Sample answer {idx + 1}'.")
-                time.sleep(1)
+                time.sleep(0.5)
 
         try:
-            # submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
-            #submit_buttons = wait.until(
-            #    EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".pd-action-btn[type='submit']"))
-            #)
-            #for submit_button in submit_buttons:
-            #    if submit_button.is_displayed() and submit_button.is_enabled():
-            #        print("SUBMIT button found, clicking to submit the survey.")
-            #        #driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
-            #        submit_button.click()
-            #        print("Survey submitted successfully. Exiting program.")
-            #        breakLoop = True
-            #        break 
-            #if breakLoop:
-            #    break
-            submit_button = driver.find_element(By.XPATH, "//form[@incomptherapistsurveyid]//input[@type='submit']")
-            actions = ActionChains(driver)
-            actions.move_to_element(submit_button).click().perform()
-            
-            #actions.moveToElement(element).click().perform();
-            #submit_button.click()
-            print("Survey submitted successfully. Exiting program.")
-            break
-        except Exception as e:
-            breakLoop = True
-            print(f"Error occurred: {e}")
-            #print("No SUBMIT button found. Checking for NEXT button.")
+            submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
+            if submit_button.is_displayed() and submit_button.is_enabled():
+                print("SUBMIT button found, clicking to submit the survey.")
+                driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)
+                submit_button.click()
+                print("Survey submitted successfully. Exiting program.")
+                assert True
+                break 
+        except Exception:
+            print("No SUBMIT button found. Checking for NEXT button.")
 
-        if breakLoop == False:
-            try:
-                next_button = driver.find_element(By.XPATH, "//button[text()='NEXT']")
-                if next_button.is_displayed() and next_button.is_enabled():
-                    print("NEXT button found, clicking to proceed to the next page.")
-                    driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
-                    next_button.click()
-                    time.sleep(2)
-                    continue
-            except Exception:
-                print("No NEXT button or SUBMIT button found. Exiting.")
-                break
-        else:
+        try:
+            next_button = driver.find_element(By.XPATH, "//button[text()='NEXT']")
+            if next_button.is_displayed() and next_button.is_enabled():
+                print("NEXT button found, clicking to proceed to the next page.")
+                driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
+                next_button.click()
+                time.sleep(2)
+                continue
+        except Exception:
+            print("No NEXT button or SUBMIT button found. Exiting.")
             break
+    time.sleep(4)
+
 finally:
     try:
         driver.quit()

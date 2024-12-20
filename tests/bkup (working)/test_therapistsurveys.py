@@ -1,30 +1,36 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
+# from webdriver_manager.chrome import ChromeDriverManager
 import time
+
+# options = webdriver.ChromeOptions()
+# options.add_argument("--no-sandbox")
+# options.add_argument("--disable-dev-shm-usage")
+# options.add_argument("--headless")
+# options.add_argument('--disable-gpu')
 
 service = Service("./chromedriver-win64/chromedriver.exe")
 driver = webdriver.Chrome(service=service)
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # driver_path = "E:/CS490/cs490_gp/tests/chromedriver-win64/chromedriver.exe"
 # brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
 
-# option = webdriver.ChromeOptions()
-# option.binary_location = brave_path
+# options.binary_location = brave_path
 # service = Service(executable_path=driver_path)
-# driver = webdriver.Chrome(service=service, options=option)
+# driver = webdriver.Chrome(service=service, options=options)
+
+
 
 try:
     driver.maximize_window()
     driver.get("http://localhost:3000/login")
-    wait = WebDriverWait(driver, 15)
-
     script = """
     var testMessage = document.createElement('div');
-    testMessage.innerHTML = "<div>FEATURE: PATIENT CAN TAKE DAILY SURVEYS AND VIEW RESULTS</div>";
+    testMessage.innerHTML = "<div>FEATURE: Therapist Survey</div>";
     testMessage.style.position = "fixed";
     testMessage.style.bottom = "10px";
     testMessage.style.left = "10px";
@@ -37,35 +43,41 @@ try:
     """
     driver.execute_script(script)
 
+    wait = WebDriverWait(driver, 45)
+    time.sleep(1)
+
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
     email_input.send_keys("john.smith@example.com")
+    element_class = email_input.get_attribute("class")
+    print("Class of the element:", element_class)
+    time.sleep(1)
     
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
+    element_class = password_input.get_attribute("class")
+    print("Class of the element:", element_class)
+    time.sleep(1)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
+    element_class = login_button.get_attribute("class")
+    print("Class of the element:", element_class)
     login_button.click()
+    time.sleep(3)
+    print("got here 1")
+    logs = driver.get_log('browser') 
+    for log in logs:
+        print(f"Console Error: {log['message']}")
+    print(driver.current_url)
     wait.until(EC.url_contains("/dashboard"))
+    print(driver.current_url)
     print("Login successful, now on the dashboard.")
 
-    time.sleep(3)
-    multi_metric_checkbox = driver.find_element(By.XPATH, "//input[@type='checkbox']")
-    if not multi_metric_checkbox.is_selected():
-        multi_metric_checkbox.click()
-    print("Toggled 'Show Multiple Metrics' checkbox.")
-    time.sleep(2)
-
-    metric_buttons = driver.find_elements(By.CSS_SELECTOR, ".metric-buttons")
-    for button in metric_buttons:
-        ActionChains(driver).move_to_element(button).click().perform()
-        print(f"Clicked on metric: {button.text}")
-        time.sleep(0.5) 
-
+    time.sleep(5) 
     survey_buttons = driver.find_elements(By.CSS_SELECTOR, ".card-buttons")
     survey_clicked = False
     for button in survey_buttons:
-        if "Daily Survey" in button.get_attribute("value"):
-            print(f"Found a daily survey button: {button.get_attribute('value')}")
+        if "(NEW) Survey" in button.get_attribute("value"):
+            print(f"Found an incomplete therapist survey button: {button.get_attribute('value')}")
             button.click()
             survey_clicked = True
             break
@@ -79,7 +91,7 @@ try:
                 question.clear()
                 question.send_keys(f"Sample answer {idx + 1}")
                 print(f"Answered question {idx + 1} with 'Sample answer {idx + 1}'.")
-                time.sleep(0.5)
+                time.sleep(1)
 
         try:
             submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
@@ -89,7 +101,6 @@ try:
                 submit_button.click()
                 print("Survey submitted successfully. Exiting program.")
                 assert True
-                time.sleep(3)
                 break 
         except Exception:
             print("No SUBMIT button found. Checking for NEXT button.")
@@ -105,8 +116,6 @@ try:
         except Exception:
             print("No NEXT button or SUBMIT button found. Exiting.")
             break
-    
-    time.sleep(3)
 
 finally:
     try:

@@ -59,7 +59,7 @@ try:
     for button in metric_buttons:
         ActionChains(driver).move_to_element(button).click().perform()
         print(f"Clicked on metric: {button.text}")
-        time.sleep(0.5) 
+        time.sleep(1) 
 
     survey_buttons = driver.find_elements(By.CSS_SELECTOR, ".card-buttons")
     survey_clicked = False
@@ -79,7 +79,7 @@ try:
                 question.clear()
                 question.send_keys(f"Sample answer {idx + 1}")
                 print(f"Answered question {idx + 1} with 'Sample answer {idx + 1}'.")
-                time.sleep(0.5)
+                time.sleep(1)
 
         try:
             submit_button = driver.find_element(By.CSS_SELECTOR, ".pd-action-btn[type='submit']")
@@ -105,8 +105,6 @@ try:
         except Exception:
             print("No NEXT button or SUBMIT button found. Exiting.")
             break
-    
-    time.sleep(3)
 
 finally:
     try:

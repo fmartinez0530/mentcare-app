@@ -8,12 +8,22 @@ import time
 service = Service("./chromedriver-win64/chromedriver.exe")
 driver = webdriver.Chrome(service=service)
 
+# driver_path = "E:/CS490/cs490_gp/tests/chromedriver-win64/chromedriver.exe"
+# brave_path = "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+
+# option = webdriver.ChromeOptions()
+# option.binary_location = brave_path
+# service = Service(executable_path=driver_path)
+# driver = webdriver.Chrome(service=service, options=option)
+
 try:
     driver.maximize_window()
     driver.get("http://localhost:3000/login")
+    wait = WebDriverWait(driver, 15)
+
     script = """
     var testMessage = document.createElement('div');
-    testMessage.innerHTML = "<div>FEATURE: LOGGED IN USER CAN SUBMIT A TESTIMONIAL</div>";
+    testMessage.innerHTML = "<div>FEATURE: ACCEPTING PATIENTS INDICATOR</div>";
     testMessage.style.position = "fixed";
     testMessage.style.bottom = "10px";
     testMessage.style.left = "10px";
@@ -26,39 +36,31 @@ try:
     """
     driver.execute_script(script)
 
-    wait = WebDriverWait(driver, 10)
-
     email_input = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "email-input")))
-    email_input.send_keys("john.smith@example.com")
-
+    email_input.send_keys("linda.white@example.com")
+    time.sleep(1)
+    
     password_input = driver.find_element(By.CLASS_NAME, "password-input")
     password_input.send_keys("password123")
+    time.sleep(1)
 
     login_button = driver.find_element(By.CLASS_NAME, "loginBtn")
     login_button.click()
-
     wait.until(EC.url_contains("/dashboard"))
-    print("Login successful!")
+    print("Login successful, now on the dashboard.")
+
+    time.sleep(3) 
+    acceptance_btn = driver.find_element(By.CLASS_NAME, "acceptanceBtn")
+    acceptance_btn.click()
+
     time.sleep(2)
+    acceptance_btn.click()
 
-    driver.get("http://localhost:3000/")
-
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     time.sleep(2)
-
-    review_box = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "review-box")))
-    driver.execute_script("arguments[0].scrollIntoView(true);", review_box)
-    review_box.clear()
-    review_box.send_keys("This platform has been amazing for my mental health!")
-    time.sleep(2)
-
-    send_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "send-button")))
-    driver.execute_script("arguments[0].scrollIntoView(true);", send_button)
-    send_button.click()
-    print("Testimonial submitted!")
-
-    time.sleep(4)
-    print("Testimonial submission test passed!")
 
 finally:
-    driver.quit()
+    try:
+        driver.quit()
+    except Exception as e:
+        print(f"Error while quitting the driver: {e}")
+    print("Program ended.")

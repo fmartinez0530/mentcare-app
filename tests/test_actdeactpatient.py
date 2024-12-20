@@ -10,12 +10,13 @@ service = Service("./chromedriver-win64/chromedriver.exe")
 driver = webdriver.Chrome(service=service)
 
 try:
+    driver.maximize_window()
     driver.get("http://localhost:3000/login")
     wait = WebDriverWait(driver, 15)
 
     script = """
     var testMessage = document.createElement('div');
-    testMessage.innerHTML = "<div>FEATURE #16: PATIENT CAN DELETE ACCOUNT</div>";
+    testMessage.innerHTML = "<div>FEATURE: PATIENT CAN DELETE ACCOUNT</div>";
     testMessage.style.position = "fixed";
     testMessage.style.bottom = "10px";
     testMessage.style.left = "10px";
@@ -41,11 +42,11 @@ try:
 
     time.sleep(3) 
     dropdown_trigger = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "navbar-profile-pic-container")))
-    time.sleep(1)
+    time.sleep(0.5)
 
     actions = ActionChains(driver)
     actions.move_to_element(dropdown_trigger).perform()
-    time.sleep(1)
+    time.sleep(0.5)
 
     settings_button = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Settings")))
     settings_button.click()
@@ -60,11 +61,11 @@ try:
     time.sleep(3) 
 
     dropdown_trigger = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "navbar-profile-pic-container")))
-    time.sleep(1)
+    time.sleep(0.5)
 
     actions = ActionChains(driver)
     actions.move_to_element(dropdown_trigger).perform()
-    time.sleep(1)
+    time.sleep(0.5)
 
     logout_button = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Log Out")))
     logout_button.click()
@@ -83,11 +84,11 @@ try:
     wait.until(EC.url_contains("/deactivate"))
 
     dropdown_trigger = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "navbar-profile-pic-container")))
-    time.sleep(1)
+    time.sleep(0.5)
 
     actions = ActionChains(driver)
     actions.move_to_element(dropdown_trigger).perform()
-    time.sleep(1)
+    time.sleep(0.5)
 
     settings_button = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Settings")))
     settings_button.click()
@@ -100,11 +101,11 @@ try:
     time.sleep(5)
 
     dropdown_trigger = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "navbar-profile-pic-container")))
-    time.sleep(1)
+    time.sleep(0.5)
 
     actions = ActionChains(driver)
     actions.move_to_element(dropdown_trigger).perform()
-    time.sleep(1)
+    time.sleep(0.5)
 
     logout_button = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Log Out")))
     logout_button.click()
