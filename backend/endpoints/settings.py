@@ -428,7 +428,7 @@ def settingsRemAccFunc():
             cursor.execute(f'''
                 SELECT users.userID, users.userName, patients.mainTherapistID
                 FROM users, patients
-                WHERE patients.patientID = users.userID AND patients.patientID = {userId}''')
+                WHERE patients.userID = users.userID AND patients.patientID = {userId}''')
             deletedUserInfo = cursor.fetchall() 
             realUserId = deletedUserInfo[0][0]
             patientName = deletedUserInfo[0][1]
