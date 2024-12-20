@@ -185,9 +185,9 @@ def getDailySurveysFunc():
                     IFNULL(cds.stress, NULL) AS stress
                 FROM dailySurveys ds
                 LEFT JOIN completedDailySurveys cds
-                    ON ds.dailySurveyID = cds.dailySurveyID
+                    ON ds.dailySurveyID = cds.dailySurveyID AND cds.patientID = %s
                 WHERE (DATE(ds.dateCreated) = CURDATE())
-                    OR (cds.dailySurveyID IS NOT NULL AND cds.patientID = %s)
+                    OR (cds.dailySurveyID IS NOT NULL)
                 ''', (patientID, ))
         daily_survey_data = cursor.fetchall()
         if daily_survey_data:
@@ -633,10 +633,10 @@ def checkInsFunc():
         cursor = mysql.connection.cursor()
         cursor.execute("SELECT insuranceCompany, insuranceID, insuranceTier FROM patients WHERE patientID = %s", (patientID, ))
         data = cursor.fetchone()
-        if data:
-           return jsonify({'message' : 'success'}), 200
+        if data[0] is None or data[1] is None or data[2] is None:
+           return jsonify({'message' : 'success'}), 404
         else:
-            return jsonify({'message' : 'success'}), 404
+            return jsonify({'message' : 'success'}), 200
     except Exception as err:
         return jsonify({"error": str(err)}), 500
     
@@ -646,6 +646,7 @@ def payInvoiceInsFunc():
         invoiceID = request.json.get('invoiceID')
         cursor = mysql.connection.cursor()
         cursor.execute('''DELETE FROM invoices WHERE invoiceID = %s;''', (invoiceID,))
+        mysql.connection.commit()
         return jsonify({'message' : 'success'}), 200
     except Exception as err:
         return jsonify({"error": str(err)}), 500

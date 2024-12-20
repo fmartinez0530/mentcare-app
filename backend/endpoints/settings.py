@@ -444,6 +444,9 @@ def settingsRemAccFunc():
             # reviews: deps on patients
             # surveys: deps on patients
             # therapistPatientsList: deps on patients
+            cursor.execute('SET FOREIGN_KEY_CHECKS = 0;')
+            mysql.connection.commit()
+            
             cursor.execute(f'''
                 DELETE FROM chats WHERE patientID = {userId}''')
             cursor.execute(f'''
@@ -476,7 +479,7 @@ def settingsRemAccFunc():
                 DELETE FROM patients WHERE patientID = {userId}''')
             cursor.execute(f'''
                 DELETE FROM users WHERE userID = {realUserId}''')
-
+            
             if(mainTherapistID):
                 cursor.execute(f"SELECT userID FROM therapists WHERE therapists.therapistID = {mainTherapistID}")
                 theraUserID = cursor.fetchone()[0]
@@ -487,6 +490,10 @@ def settingsRemAccFunc():
                     app.socketio.emit("update-navbar", room=app.socketsNavbar[str(theraUserID)])
             
             mysql.connection.commit()
+
+            cursor.execute('SET FOREIGN_KEY_CHECKS = 1;')
+            mysql.connection.commit()
+            
             response = jsonify({"deletion" : "successful"})
             response.status_code = 200
             response.headers['Access-Control-Allow-Origin'] = 'https://mentcare-frontend.onrender.com'
