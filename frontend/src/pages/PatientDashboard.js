@@ -597,7 +597,7 @@ function PatientDashboard() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "patientID": localStorage.get('userID'),
+                "patientID": localStorage.getItem('userID'),
             }),
         });
 
